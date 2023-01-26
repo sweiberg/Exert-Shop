@@ -3,8 +3,8 @@ Exert Shop is an e-commerce solution that will allow users to buy and sell merch
 
 Exert Shop is the group submission for Project Group 42 in University of Florida’s CEN3031 – Intro to Software Engineering.
 
-Project Members:
-Rafid Chowdhury – Backend
-Jonathan Weiberg – Backend
-Mahammad Immam – Frontend
-Stephen Weiberg – Frontend
+Project Members: <br />
+Rafid Chowdhury – Backend <br />
+Jonathan Weiberg – Backend <br />
+Mahammad Immam – Frontend <br />
+Stephen Weiberg – Frontend 
