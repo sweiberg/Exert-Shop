@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { background: #303030; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.exert-navbar-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 8px 16px;
+    flex: 100%;
+}
+.flex-spacer {
+    flex-grow: 1;
+}
+.mat-elevation {
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    box-shadow: 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 rgb(0 0 0 / 12%);
+}
+#search {
+    flex: 1;
+    display: flex;
+    position: relative;
+    margin: 0 50px
+}
+.example-form {
+    width: 100%;
+}
+.example-full-width {
+    width: 100%;
+    margin-bottom: -1.25em !important;
+}
+.centered-text {
+    text-align: center;
+    width: 100%;
+}
+.container {
+    padding: 20px 120px;
+}
+.nav-button {
+    padding-right: 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: #ccc;
+}
+.nav-button:hover {
+    color: #fff;
+}

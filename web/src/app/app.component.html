@@ -1,0 +1,50 @@
+<!-- nav -->
+<div class="mat-elevation">
+<mat-toolbar color="primary"><div class="centered-text">Save 30% with&nbsp;<u>FLEXMONDAY30</u></div></mat-toolbar>
+  <mat-toolbar style="min-height:90px; padding: 0 120px;">
+          <a routerLink="/">Exert Shop</a>
+          <!-- <div class ="flex-spacer"></div> -->
+          <div id="search">
+          <form class="example-form">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Search</mat-label>
+              <input type="text"
+                     placeholder="Pick one"
+                     aria-label="Search"
+                     matInput
+                     [formControl]="myControl"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+              <button type="button" mat-icon-button matSuffix>
+                <mat-icon>search</mat-icon>
+            </button>
+            </mat-form-field>
+          </form>
+        </div>
+
+          <!-- <div class ="flex-spacer"></div> -->
+          <button mat-icon-button><mat-icon aria-label="User Profile">account_circle</mat-icon></button>
+          <button mat-icon-button><mat-icon aria-label="View Lists">view_list</mat-icon></button>
+          <button mat-icon-button><mat-icon matBadge="3" aria-label="Shopping Cart">shopping_cart</mat-icon></button>
+  </mat-toolbar>
+  <mat-toolbar style="padding: 0 120px;">
+    <a routerLink="/" class="nav-button">Category 1</a>
+    <a routerLink="/login" class="nav-button">Category 2</a>
+    <a routerLink="/register" class="nav-button">Category 3</a>
+  </mat-toolbar>
+  </div>
+  
+  <!-- main content container -->
+  <div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 offset-sm-2">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+  </div>
