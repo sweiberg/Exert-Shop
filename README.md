@@ -6,5 +6,5 @@ Exert Shop is the group submission for Project Group 42 in University of Florida
 Project Members: <br />
 Rafid Chowdhury – Backend <br />
 Jonathon Weiberg – Backend <br />
-Mahammad Immam – Frontend <br />
+Mohammad Immam – Frontend <br />
 Stephen Weiberg – Frontend 

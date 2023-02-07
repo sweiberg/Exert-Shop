@@ -1,0 +1,17 @@
+<div class="product-card">
+  <div class="badge">{{product.tag}}</div>
+  <div class="product-holder">
+    <img src="{{product.imgURL}}" alt="">
+  </div>
+  <div class="product-details">
+    <span class="product-category">{{product.category}}</span>
+    <h4><a href="">{{product.name}}</a></h4>
+    <p>{{product.description}}</p>
+    <div class="product-bottom-details">
+      <div class="product-price"><small>${{product.finalPrice}}.00</small>${{product.originalPrice}}.00</div>
+      <div class="product-links">
+        <a><fa-icon [icon]="faShoppingCart"></fa-icon></a>
+      </div>
+    </div>
+  </div>
+</div>

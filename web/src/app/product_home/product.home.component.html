@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<mat-grid-list cols="4" rowHeight="1:2">
+  <ng-container>
+  <mat-grid-tile *ngFor="let item of productList"><product [product]=item></product></mat-grid-tile>
+  </ng-container>
+</mat-grid-list>
+
+</body>
+</html>
