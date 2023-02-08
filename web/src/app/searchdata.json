@@ -1,0 +1,32 @@
+[
+    {
+        "title": "Hanes Shirt",
+        "cat": "Clothing",
+        "subcat": "Shirts"
+    },
+    {
+        "title": "Hanes Pants",
+        "cat": "Clothing",
+        "subcat": "Pants"
+    },
+    {
+        "title": "Levi Shirt",
+        "cat": "Clothing",
+        "subcat": "Shirts"
+    },
+    {
+        "title": "Levi Pants",
+        "cat": "Clothing",
+        "subcat": "Pants"
+    },
+    {
+        "title": "Mario Kart 8",
+        "cat": "Electronics",
+        "subcat": "Switch Games"
+    },
+    {
+        "title": "Luigi's Mansion 2",
+        "cat": "Electronics",
+        "subcat": "Shirts"
+    }
+]
