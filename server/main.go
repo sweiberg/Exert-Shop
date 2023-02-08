@@ -20,6 +20,7 @@ func main() {
 func loadDB() {
 	db.Connect()
 	db.Database.AutoMigrate(&model.User{})
+	db.Database.AutoMigrate(&model.Product{})
 }
 
 func loadEnv() {
@@ -35,6 +36,7 @@ func loadRoutes() {
 
 	publicRoutes := router.Group("/auth")
 	publicRoutes.POST("/register", controller.Register)
+	publicRoutes.POST("/addproduct", controller.AddProduct)
 
 	router.Run(":4300")
 
