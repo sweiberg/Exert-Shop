@@ -18,6 +18,7 @@ func Register(context *gin.Context) {
 
 	user := model.User{
 		Username: input.Username,
+		Email:    input.Email,
 		Password: input.Password,
 	}
 
