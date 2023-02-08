@@ -2,6 +2,7 @@ package main
 
 import (
 	"exert-shop/db"
+	"exert-shop/model"
 	"log"
 
 	"github.com/joho/godotenv"
@@ -14,6 +15,7 @@ func main() {
 
 func loadDB() {
 	db.Connect()
+	db.Database.AutoMigrate(&model.User{})
 }
 
 func loadEnv() {
