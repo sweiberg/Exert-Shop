@@ -1,8 +1,8 @@
 <!-- nav -->
 <div class="mat-elevation">
-<mat-toolbar color="primary"><div class="centered-text">Save 30% with&nbsp;<u>FLEXMONDAY30</u></div></mat-toolbar>
+<mat-toolbar color="primary"><div class="centered-text">Save 30% with&nbsp;<code>FLEXMONDAY30</code></div></mat-toolbar>
   <mat-toolbar style="min-height:90px; padding: 0 120px;">
-          <a routerLink="/">Exert Shop</a>
+          <a routerLink="/" class="nav-button" style="padding-right: 0"><h2 style="margin:0">Exert Shop</h2></a>
           <!-- <div class ="flex-spacer"></div> -->
           <div id="search">
           <form class="example-form">
@@ -15,7 +15,7 @@
                      [formControl]="myControl"
                      [matAutocomplete]="auto">
               <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                <mat-option *ngFor="let option of filteredOptions | async | slice : 0 : 10" [value]="option">
                   {{option}}
                 </mat-option>
               </mat-autocomplete>
@@ -27,17 +27,40 @@
         </div>
 
           <!-- <div class ="flex-spacer"></div> -->
-          <button mat-icon-button><mat-icon aria-label="User Profile">account_circle</mat-icon></button>
+          <button mat-icon-button [matMenuTriggerFor]="user"><mat-icon aria-label="User Profile">account_circle</mat-icon></button>
           <button mat-icon-button><mat-icon aria-label="View Lists">view_list</mat-icon></button>
           <button mat-icon-button><mat-icon matBadge="3" aria-label="Shopping Cart">shopping_cart</mat-icon></button>
   </mat-toolbar>
   <mat-toolbar style="padding: 0 120px;">
-    <a routerLink="/" class="nav-button">Category 1</a>
-    <a routerLink="/login" class="nav-button">Category 2</a>
-    <a routerLink="/register" class="nav-button">Category 3</a>
+    <a class="nav-button" [matMenuTriggerFor]="deals">Best Deals</a>
+    <a class="nav-button" [matMenuTriggerFor]="electronics">Electronics</a>
+    <a class="nav-button">Collectibles</a>
+    <a class="nav-button">Clothing</a>
+    <a class="nav-button">Accessories</a>
+    <a class="nav-button">Home & Lifestyle</a>
+    <a class="nav-button">Office Supplies</a>
   </mat-toolbar>
   </div>
-  
+
+  <mat-menu #deals="matMenu">
+    <button mat-menu-item>Deals for Kids</button>
+    <button mat-menu-item>Deals for Teens</button>
+    <button mat-menu-item>Deals for Adults</button>
+  </mat-menu>
+
+  <mat-menu #user="matMenu">
+    <button mat-menu-item>Profile</button>
+    <button mat-menu-item>Settings</button>
+    <button mat-menu-item>Logout</button>
+  </mat-menu>
+
+  <mat-menu #electronics="matMenu">
+    <button mat-menu-item>TV & Video</button>
+    <button mat-menu-item>Video Games</button>
+    <button mat-menu-item>Computer Hardware</button>
+    <button mat-menu-item>Cell Phones</button>
+  </mat-menu>
+
   <!-- main content container -->
   <div class="jumbotron">
     <div class="container">
