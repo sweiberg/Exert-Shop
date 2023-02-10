@@ -36,6 +36,7 @@ func loadRoutes() {
 
 	publicRoutes := router.Group("/auth")
 	publicRoutes.POST("/register", controller.Register)
+	publicRoutes.POST("/login", controller.Login)
 	publicRoutes.POST("/addproduct", controller.AddProduct)
 
 	router.Run(":4300")

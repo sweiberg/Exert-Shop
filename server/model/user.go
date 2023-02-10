@@ -39,3 +39,19 @@ func (user *User) BeforeCreate(*gorm.DB) error {
 
 	return nil
 }
+
+func (user *User) AuthPassword(password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+}
+
+func QueryUsername(username string) (User, error) {
+	var user User
+
+	err := db.Database.Where("username=?", username).Find(&user).Error
+
+	if err != nil {
+		return User{}, err
+	}
+
+	return user, nil
+}
