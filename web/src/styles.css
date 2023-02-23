@@ -57,3 +57,19 @@ code {
     border-radius: 5px;
     padding: 5px;
 }
+.user-form {
+    display: flex;
+    flex-direction: column;
+}
+.user-form-card {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.user-form-card mat-card-header {
+    padding: 16px;
+}
+
+.user-form-card mat-card-actions {
+    padding: 0;
+}
