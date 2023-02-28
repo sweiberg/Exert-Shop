@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   @ViewChild(MatMenuTrigger, { static: false })
   trigger!: MatMenuTrigger;
   recheckIfInMenu!: boolean;
+  title: string = 'web';
 
   ngOnInit() {
     this.filteredOptions = this.myControl.valueChanges.pipe(
