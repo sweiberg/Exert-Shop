@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
+import {ProductComponent} from "./globals/product";
+import {ProductHomeComponent} from "./product_home";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -51,15 +53,16 @@ import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
-
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProductComponent,
+    ProductHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -113,6 +116,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     OverlayModule,
     PortalModule,
     ScrollingModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

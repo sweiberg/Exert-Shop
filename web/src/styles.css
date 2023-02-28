@@ -40,11 +40,20 @@ body { background: #303030; margin: 0; font-family: Roboto, "Helvetica Neue", sa
     padding: 20px 120px;
 }
 .nav-button {
-    padding-right: 20px;
+    padding-right: 65px;
     font-size: 16px;
     text-decoration: none;
     color: #ccc;
 }
 .nav-button:hover {
     color: #fff;
+    cursor: pointer;
+}
+.nav-button:focus-visible {
+    outline: 0;
+}
+code {
+    background: #9b4bbd;
+    border-radius: 5px;
+    padding: 5px;
 }
