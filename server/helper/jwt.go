@@ -1,11 +1,15 @@
 package helper
 
 import (
+	"errors"
 	"exert-shop/model"
+	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 )
 
@@ -21,4 +25,46 @@ func CreateJWT(user model.User) (string, error) {
 	})
 
 	return token.SignedString(PrivateKey)
+}
+
+func VerifyHeaderJWT(context *gin.Context) error {
+	token, err := GetJWT(context)
+
+	if err != nil {
+		return err
+	}
+
+	_, verified := token.Claims.(jwt.MapClaims)
+
+	if verified && token.Valid {
+		return nil
+	}
+
+	return errors.New("The JWT could not be verified.")
+}
+
+func GetJWT(context *gin.Context) (*jwt.Token, error) {
+	bearerJWT := GetBearerJWT(context)
+
+	token, err := jwt.Parse(bearerJWT, func(token *jwt.Token) (interface{}, error) {
+		_, signed := token.Method.(*jwt.SigningMethodHMAC)
+
+		if !signed {
+			return nil, fmt.Errorf("An error occured with the signing method: %v", token.Header["alg"])
+		}
+
+		return PrivateKey, nil
+	})
+
+	return token, err
+}
+
+func GetBearerJWT(context *gin.Context) string {
+	bearer := strings.Split(context.Request.Header.Get("Authorization"), " ")
+
+	if len(bearer) == 2 {
+		return bearer[1]
+	}
+
+	return ""
 }
