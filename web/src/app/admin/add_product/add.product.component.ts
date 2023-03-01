@@ -3,11 +3,21 @@ import {Product} from "../../schema/product.schema";
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({templateUrl: 'add.product.html'})
 export class AddProductComponent {
-  constructor(private route:ActivatedRoute, private router:Router, public fb: FormBuilder, private http: HttpClient, private _snackBar: MatSnackBar) {
+  title: string;
+  form: FormGroup;
+  constructor(private route:ActivatedRoute, private router:Router, public fb: FormBuilder, private http: HttpClient) {
+    this.form = this.fb.group({
+      name: new FormControl('', []),
+      originalPrice: new FormControl('', []),
+      finalPrice: new FormControl('', []),
+      description: new FormControl('', []),
+      category: new FormControl('', []),
+      tag: new FormControl('', []),
+      imgURL: new FormControl('', []),
+    });
   }
   defaultInfo = {
     name: 'Sample Product',
@@ -32,6 +42,7 @@ export class AddProductComponent {
   nameSubscription = this.name.valueChanges.subscribe((value) => {
     this.product.name = value ?? this.defaultInfo.name;
   });
+
 
   originalPriceSubscription = this.originalPrice.valueChanges.subscribe((value) => {
     let price = this.defaultInfo.originalPrice;
@@ -87,7 +98,4 @@ export class AddProductComponent {
         error: (error) => console.log(error),
       });
   }
-
-
-
 }
