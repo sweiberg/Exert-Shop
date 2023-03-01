@@ -6,6 +6,7 @@ import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import {ProductComponent} from "./globals/product";
 import {ProductHomeComponent} from "./product_home";
+import {AddProductComponent} from "./admin/add_product";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -63,7 +64,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     LoginComponent,
     RegisterComponent,
     ProductComponent,
-    ProductHomeComponent
+    ProductHomeComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,

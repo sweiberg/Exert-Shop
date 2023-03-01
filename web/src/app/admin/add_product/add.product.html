@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Title</title>
+</head>
+<body>
+
+<mat-grid-list cols="2" rowHeight="1:1">
+  <ng-container>
+    <mat-grid-tile>
+          <ng-form>
+            <h1>Product Information</h1>
+            <br>
+            <mat-form-field>
+              <input matInput placeholder="Name" [formControl]="name">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput placeholder="Price" [formControl]="originalPrice">
+            </mat-form-field>
+            <br>
+            <mat-form-field *ngIf="this.product.tag=='SALE'">
+              <input matInput placeholder="Sale Price" [formControl]="finalPrice">
+            </mat-form-field>
+
+            <br>
+            <mat-form-field>
+              <input matInput placeholder="Description" [formControl]="description">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput placeholder="Category" [formControl]="category">
+            </mat-form-field>
+            <br>
+            <p>Add Sale tag to define sale price</p>
+            <mat-form-field>
+              <input matInput placeholder="Tag" [formControl]="tag">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput placeholder="Image URL (PNG)" [formControl]="imgURL">
+            </mat-form-field>
+            <br>
+            <button mat-raised-button color="primary">Add Product</button>
+            <br>
+          </ng-form>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <product [product]="product"></product>
+    </mat-grid-tile>
+  </ng-container>
+
+</mat-grid-list>
+
+
+</body>
+</html>
