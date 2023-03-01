@@ -17,6 +17,8 @@ interface Search {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  title: String = 'Exert Shop';
+
   myControl = new FormControl('');
 
   search: Search[] = data;
@@ -28,7 +30,6 @@ export class AppComponent implements OnInit {
   @ViewChild(MatMenuTrigger, { static: false })
   trigger!: MatMenuTrigger;
   recheckIfInMenu!: boolean;
-  title: string = 'web';
 
   ngOnInit() {
     this.filteredOptions = this.myControl.valueChanges.pipe(

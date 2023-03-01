@@ -8,6 +8,7 @@ export class RegisterComponent implements OnInit {
   
     ngOnInit() {}
 
+    title: String = 'User Registration';
     hide = true;
     form: FormGroup;
 
