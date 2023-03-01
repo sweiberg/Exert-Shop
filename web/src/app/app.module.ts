@@ -1,10 +1,12 @@
 import { NgModule, OnInit } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import {ProductComponent} from "./globals/product";
 import {ProductHomeComponent} from "./product_home";
+import {AddProductComponent} from "./admin/add_product";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -62,7 +64,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     LoginComponent,
     RegisterComponent,
     ProductComponent,
-    ProductHomeComponent
+    ProductHomeComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,
@@ -116,7 +119,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     OverlayModule,
     PortalModule,
     ScrollingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,30 @@
-<h1>Register Page Test</h1>
+<mat-card class="user-form-card">
+  <mat-card-header>
+      <mat-card-title>User Registration</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="user-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label for="username">Enter your username</mat-label>
+        <input matInput id="username" type="text" formControlName="username">
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label for="email">Enter your email address</mat-label>
+        <input matInput id="email" type="text" formControlName="email">
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label for="password">Enter a secure password</mat-label>
+        <input matInput id="password" [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+      <mat-card-actions>
+        <button mat-raised-button type="submit" color="primary">REGISTER</button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>
