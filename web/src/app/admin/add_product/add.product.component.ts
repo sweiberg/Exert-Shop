@@ -1,9 +1,14 @@
 import {Component} from '@angular/core';
 import {Product} from "../../schema/product.schema";
-import {FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({templateUrl: 'add.product.html'})
 export class AddProductComponent {
+  constructor(private route:ActivatedRoute, private router:Router, public fb: FormBuilder, private http: HttpClient, private _snackBar: MatSnackBar) {
+  }
   defaultInfo = {
     name: 'Sample Product',
     finalPrice: 0,
@@ -59,5 +64,30 @@ export class AddProductComponent {
   imgURLSubscription = this.imgURL.valueChanges.subscribe((value) => {
     this.product.imgURL = value ?? this.defaultInfo.imgURL;
   });
+
+  constructAndTrimJSON(){
+    let updatedForm = {
+      name: this.product.name,
+      description: this.product.description,
+      price: this.product.originalPrice,
+      sellerid: 1
+    }
+    return JSON.stringify(updatedForm);
+  }
+
+  onSubmit(){
+    let form = this.constructAndTrimJSON();
+    console.log(form)
+    return this.http.post('http://localhost:4300/auth/addproduct', form, {
+      headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response'
+    })
+      .subscribe({
+        // Here we want to store the JWT token globally after login to then use on verified routes
+        next: (response) => console.log(response),
+        error: (error) => console.log(error),
+      });
+  }
+
+
 
 }
