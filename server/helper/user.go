@@ -8,7 +8,7 @@ import (
 )
 
 func CurrentUser(context *gin.Context) (model.User, error) {
-	err := VerifyJWT(context)
+	err := VerifyHeaderJWT(context)
 
 	if err != nil {
 		return model.User{}, err

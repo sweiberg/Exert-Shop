@@ -27,7 +27,7 @@ func CreateJWT(user model.User) (string, error) {
 	return token.SignedString(PrivateKey)
 }
 
-func VerifyJWT(context *gin.Context) error {
+func VerifyHeaderJWT(context *gin.Context) error {
 	token, err := GetJWT(context)
 
 	if err != nil {
