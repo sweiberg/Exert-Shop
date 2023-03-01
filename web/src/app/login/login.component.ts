@@ -6,9 +6,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
+  title: String = 'User Login';
   hide = true;
   congrats = '';
   form: FormGroup;
+
   constructor(private route:ActivatedRoute, private router:Router, public fb: FormBuilder, private http: HttpClient, private _snackBar: MatSnackBar) {
     this.form = this.fb.group({
       username: new FormControl('', [Validators.required]),
