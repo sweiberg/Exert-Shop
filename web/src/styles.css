@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { background: #303030!important; margin: 0!important; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { background: #303030; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .exert-navbar-header {
     display: flex;
     flex-wrap: wrap;
@@ -9,7 +9,6 @@ body { background: #303030!important; margin: 0!important; font-family: Roboto, 
     padding: 8px 16px;
     flex: 100%;
 }
-
 .flex-spacer {
     flex-grow: 1;
 }
@@ -58,3 +57,23 @@ code {
     border-radius: 5px;
     padding: 5px;
 }
+.user-form {
+    display: flex;
+    flex-direction: column;
+}
+.user-form-card {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.user-form-card mat-card-header {
+    padding: 16px;
+}
+
+.user-form-card mat-card-actions {
+    padding: 0;
+}
+
+.simple-snack-bar .mat-simple-snackbar {
+    justify-content: center;
+  }

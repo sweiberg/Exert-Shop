@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"exert-shop/helper"
 	"exert-shop/model"
 	"net/http"
 
@@ -31,6 +32,42 @@ func Register(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusCreated, gin.H{"user": newUser})
+}
+
+func Login(context *gin.Context) {
+	var input model.UserAuth
+
+	if err := context.ShouldBindJSON(&input); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	user, err := model.GetUserByName(input.Username)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	err = user.AuthPassword(input.Password)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	jwt, err := helper.CreateJWT(user)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"jwt": jwt})
 }
 
 func AddProduct(context *gin.Context) {

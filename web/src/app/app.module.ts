@@ -1,4 +1,5 @@
 import { NgModule, OnInit } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
@@ -118,7 +119,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     OverlayModule,
     PortalModule,
     ScrollingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
