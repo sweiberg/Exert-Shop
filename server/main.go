@@ -3,6 +3,7 @@ package main
 import (
 	"exert-shop/controller"
 	"exert-shop/db"
+	"exert-shop/middleware"
 	"exert-shop/model"
 	"fmt"
 	"log"
@@ -37,7 +38,10 @@ func loadRoutes() {
 	publicRoutes := router.Group("/auth")
 	publicRoutes.POST("/register", controller.Register)
 	publicRoutes.POST("/login", controller.Login)
-	publicRoutes.POST("/addproduct", controller.AddProduct)
+
+	protectedRoutes := router.Group("/api")
+	protectedRoutes.Use(middleware.VerifyJWT())
+	protectedRoutes.POST("/addproduct", controller.AddProduct)
 
 	router.Run(":4300")
 

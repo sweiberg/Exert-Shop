@@ -7,14 +7,14 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-func CurrentUser(context *gin.Context) (model.User, error) {
+func GetThisUser(context *gin.Context) (model.User, error) {
 	err := VerifyHeaderJWT(context)
 
 	if err != nil {
 		return model.User{}, err
 	}
 
-	token, _ := GetJWT(context)
+	token, _ := GetHeaderJWT(context)
 	claims, _ := token.Claims.(jwt.MapClaims)
 	uid := uint(claims["id"].(float64))
 

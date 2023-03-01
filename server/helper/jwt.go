@@ -28,7 +28,7 @@ func CreateJWT(user model.User) (string, error) {
 }
 
 func VerifyHeaderJWT(context *gin.Context) error {
-	token, err := GetJWT(context)
+	token, err := GetHeaderJWT(context)
 
 	if err != nil {
 		return err
@@ -43,7 +43,7 @@ func VerifyHeaderJWT(context *gin.Context) error {
 	return errors.New("The JWT could not be verified.")
 }
 
-func GetJWT(context *gin.Context) (*jwt.Token, error) {
+func GetHeaderJWT(context *gin.Context) (*jwt.Token, error) {
 	bearerJWT := GetBearerJWT(context)
 
 	token, err := jwt.Parse(bearerJWT, func(token *jwt.Token) (interface{}, error) {
