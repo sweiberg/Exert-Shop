@@ -43,7 +43,7 @@ func Login(context *gin.Context) {
 		return
 	}
 
-	user, err := model.QueryUsername(input.Username)
+	user, err := model.GetUserByName(input.Username)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

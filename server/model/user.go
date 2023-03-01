@@ -44,10 +44,22 @@ func (user *User) AuthPassword(password string) error {
 	return bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 }
 
-func QueryUsername(username string) (User, error) {
+func GetUserByName(username string) (User, error) {
 	var user User
 
 	err := db.Database.Where("username=?", username).Find(&user).Error
+
+	if err != nil {
+		return User{}, err
+	}
+
+	return user, nil
+}
+
+func GetUserByID(uid uint) (User, error) {
+	var user User
+
+	err := db.Database.Where("ID=?", uid).Find(&user).Error
 
 	if err != nil {
 		return User{}, err

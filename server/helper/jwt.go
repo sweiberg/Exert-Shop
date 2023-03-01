@@ -40,7 +40,7 @@ func VerifyJWT(context *gin.Context) error {
 		return nil
 	}
 
-	return errors.New("The JWT token could not be verified.")
+	return errors.New("The JWT could not be verified.")
 }
 
 func GetJWT(context *gin.Context) (*jwt.Token, error) {
