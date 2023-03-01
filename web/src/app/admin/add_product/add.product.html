@@ -22,7 +22,6 @@
             <mat-form-field *ngIf="this.product.tag=='SALE'">
               <input matInput placeholder="Sale Price" [formControl]="finalPrice">
             </mat-form-field>
-
             <br>
             <mat-form-field>
               <input matInput placeholder="Description" [formControl]="description">
@@ -41,8 +40,7 @@
               <input matInput placeholder="Image URL (PNG)" [formControl]="imgURL">
             </mat-form-field>
             <br>
-            <button mat-raised-button color="primary">Add Product</button>
-            <br>
+            <button (click)="onSubmit()" mat-raised-button color="primary">Add Product</button>
           </ng-form>
     </mat-grid-tile>
     <mat-grid-tile>

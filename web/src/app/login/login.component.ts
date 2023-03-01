@@ -31,10 +31,11 @@ export class LoginComponent implements OnInit {
     onSubmit(){
       console.log(JSON.stringify(this.form.value));
 
-      return this.http.post('http://localhost:4300/auth/login', this.form.value, { 
-        headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response' 
+      return this.http.post('http://localhost:4300/auth/login', this.form.value, {
+        headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response'
       })
       .subscribe({
+        // Here we want to store the JWT token globally after login to then use on verified routes
         next: (response) => console.log(response),
         error: (error) => console.log(error),
       });
