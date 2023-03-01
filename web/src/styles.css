@@ -73,3 +73,7 @@ code {
 .user-form-card mat-card-actions {
     padding: 0;
 }
+
+.simple-snack-bar .mat-simple-snackbar {
+    justify-content: center;
+  }
