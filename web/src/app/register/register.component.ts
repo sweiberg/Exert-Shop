@@ -5,9 +5,9 @@ import { NavigationExtras, Router } from '@angular/router'
 
 @Component({ templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
-  
     ngOnInit() {}
 
+    title: String = 'User Registration';
     hide = true;
     form: FormGroup;
 
@@ -23,8 +23,8 @@ export class RegisterComponent implements OnInit {
     onSubmit(){
         console.log(JSON.stringify(this.form.value));
 
-        return this.http.post('http://localhost:4300/auth/register', this.form.value, { 
-          headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response' 
+        return this.http.post('http://localhost:4300/auth/register', this.form.value, {
+          headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response'
         })
         .subscribe({
           next: (response) => this.router.navigate(['/login'], {queryParams: { registered: 'true' } }),

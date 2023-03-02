@@ -17,6 +17,8 @@ interface Search {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  title: String = 'Exert Shop';
+
   myControl = new FormControl('');
 
   search: Search[] = data;

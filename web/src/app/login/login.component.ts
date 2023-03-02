@@ -6,9 +6,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
+  title: String = 'User Login';
   hide = true;
   congrats = '';
   form: FormGroup;
+
   constructor(private route:ActivatedRoute, private router:Router, public fb: FormBuilder, private http: HttpClient, private _snackBar: MatSnackBar) {
     this.form = this.fb.group({
       username: new FormControl('', [Validators.required]),
@@ -29,10 +31,11 @@ export class LoginComponent implements OnInit {
     onSubmit(){
       console.log(JSON.stringify(this.form.value));
 
-      return this.http.post('http://localhost:4300/auth/login', this.form.value, { 
-        headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response' 
+      return this.http.post('http://localhost:4300/auth/login', this.form.value, {
+        headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response'
       })
       .subscribe({
+        // Here we want to store the JWT token globally after login to then use on verified routes
         next: (response) => console.log(response),
         error: (error) => console.log(error),
       });
