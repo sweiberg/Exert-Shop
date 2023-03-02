@@ -37,10 +37,8 @@
 - Tests submission of registration form <br />
 - Tests routing to login page on successful registration<br />
 <h3>Backend Unit Test</h3>
-- Create JWT: Test if JWT is accessible and that a signed string utilizing the private key is being returned. <br />
 - Create user: Test if a user can successfully be added to the exert shop database. <br />
 - User login: Test if the user login route responds with a valid JWT. <br />
-- User authorization: Test if the JWT middleware for protected routes is properly blocking unauthorized access. <br />
 - Add product: Test if users with a verified JWT can access the protected add product route. <br />
 
 <br />
