@@ -5,7 +5,6 @@ import (
 	"exert-shop/db"
 	"exert-shop/middleware"
 	"exert-shop/model"
-	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -22,6 +21,7 @@ func loadDB() {
 	db.Connect()
 	db.Database.AutoMigrate(&model.User{})
 	db.Database.AutoMigrate(&model.Product{})
+	db.Database.AutoMigrate(&model.Message{})
 }
 
 func loadEnv() {
@@ -41,6 +41,7 @@ func CORS() gin.HandlerFunc {
 
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)
+
 			return
 		}
 
@@ -50,7 +51,7 @@ func CORS() gin.HandlerFunc {
 
 func loadRoutes() {
 	router := gin.Default()
-  router.Use(CORS())
+	router.Use(CORS())
 
 	publicRoutes := router.Group("/auth")
 	publicRoutes.POST("/register", controller.Register)
@@ -59,8 +60,7 @@ func loadRoutes() {
 	protectedRoutes := router.Group("/api")
 	protectedRoutes.Use(middleware.VerifyJWT())
 	protectedRoutes.POST("/addproduct", controller.AddProduct)
+	protectedRoutes.POST("/sendmessage", controller.SendMessage)
 
 	router.Run(":4300")
-
-	fmt.Println("Listen server successfully started on port 4300.")
 }
