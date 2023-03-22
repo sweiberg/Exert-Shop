@@ -50,7 +50,7 @@ func CORS() gin.HandlerFunc {
 
 func loadRoutes() {
 	router := gin.Default()
-  router.Use(CORS())
+	router.Use(CORS())
 
 	publicRoutes := router.Group("/auth")
 	publicRoutes.POST("/register", controller.Register)

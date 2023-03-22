@@ -1,8 +1,10 @@
 package model
 
 import (
+	"exert-shop/currency"
 	"exert-shop/db"
 
+	"github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
@@ -10,9 +12,17 @@ type Product struct {
 	gorm.Model
 
 	Name        string `gorm:"size:255;not null" json:"name"`
-	Description string `gorm:"size:255;not null" json:"description"`
-	Price       uint   `gorm:"not null" json:"price"`
-	SellerID    uint   `gorm:"not null" json:"sellerid"`
+	Description string `gorm:"type:text;not null" json:"description"`
+	ImageURL    string `gorm:"size:255" json:"imageURL"`
+
+	Tags pq.StringArray `gorm:"type:text[]" json:"tags"`
+
+	OriginalPrice currency.USD `gorm:"not null" json:"originalPrice"`
+	FinalPrice    currency.USD `gorm:"default:0" json:"finalPrice"`
+
+	CategoryID uint `gorm:"not null" json:"categoryID"`
+	SellerID   uint
+	BuyerID    uint
 }
 
 func (product *Product) Create() (*Product, error) {
