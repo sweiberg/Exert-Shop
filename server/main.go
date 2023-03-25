@@ -32,35 +32,22 @@ func loadEnv() {
 	}
 }
 
-func CORS() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
-
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
-
-			return
-		}
-
-		c.Next()
-	}
-}
-
 func loadRoutes() {
 	router := gin.Default()
-	router.Use(CORS())
 
-	publicRoutes := router.Group("/auth")
-	publicRoutes.POST("/register", controller.Register)
-	publicRoutes.POST("/login", controller.Login)
+	router.Use(middleware.CORS())
+	router.Use(middleware.ErrorHandler)
 
-	protectedRoutes := router.Group("/api")
-	protectedRoutes.Use(middleware.VerifyJWT())
-	protectedRoutes.POST("/addproduct", controller.AddProduct)
-	protectedRoutes.POST("/sendmessage", controller.SendMessage)
+	auth := router.Group("/auth")
+	auth.POST("/register", controller.Register)
+	auth.POST("/login", controller.Login)
+	auth.POST("/test", controller.Test)
+
+	api := router.Group("/api")
+	api.Use(middleware.VerifyJWT())
+	api.POST("/addproduct", controller.AddProduct)
+	api.POST("/sendmessage", controller.SendMessage)
+	api.GET("/viewmessage/:id", controller.ViewMessage)
 
 	router.Run(":4300")
 }
