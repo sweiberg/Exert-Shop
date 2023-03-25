@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       })
       .subscribe({
         // Here we want to store the JWT token globally after login to then use on verified routes
-        next: (response) => console.log(response),
+        next: (response) => console.log("Token : " + JSON.stringify(response.body)),
         error: (error) => console.log(error),
       });
   }
