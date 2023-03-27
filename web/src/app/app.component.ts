@@ -3,7 +3,7 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { MatMenuTrigger } from '@angular/material/menu';
-import data from 'src/app/searchdata.json';
+import data from './searchdata.json';
 
 interface Search {
   title: string;

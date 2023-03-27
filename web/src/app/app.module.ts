@@ -56,6 +56,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { ProfileComponent } from './profile';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     RegisterComponent,
     ProductComponent,
     ProductHomeComponent,
-    AddProductComponent
+    AddProductComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -120,7 +122,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     PortalModule,
     ScrollingModule,
     FontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

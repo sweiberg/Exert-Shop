@@ -5,6 +5,7 @@ import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import {ProductHomeComponent} from "./product_home";
 import {AddProductComponent} from "./admin/add_product";
+import { ProfileComponent } from './profile';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path : 'sample_product', component: ProductHomeComponent},
   { path : 'admin/add_product', component: AddProductComponent},
+  { path : 'profile', component: ProfileComponent},
   { path: '**', redirectTo: '' }
 ];
 

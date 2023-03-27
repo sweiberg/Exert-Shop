@@ -3,15 +3,19 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../shared/auth/auth.service'
+import { StorageService } from '../shared/auth/storage.service'
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
   title: String = 'User Login';
   hide = true;
+  isLoggedIn = false;
+  isLoginFailed = false;
   congrats = '';
   form: FormGroup;
 
-  constructor(private route:ActivatedRoute, private router:Router, public fb: FormBuilder, private http: HttpClient, private _snackBar: MatSnackBar) {
+  constructor(private route:ActivatedRoute, private router:Router, public fb: FormBuilder, private http: HttpClient, private _snackBar: MatSnackBar, private storageService: StorageService, private authService: AuthService) {
     this.form = this.fb.group({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -28,16 +32,25 @@ export class LoginComponent implements OnInit {
       });
     }
 
-    onSubmit(){
+    onSubmit(): void {
       console.log(JSON.stringify(this.form.value));
 
-      return this.http.post('http://localhost:4300/auth/login', this.form.value, {
-        headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response'
-      })
+      const username = this.form.controls['username'].value;
+      const password = this.form.controls['password'].value;
+
+      this.authService.login(username, password)
       .subscribe({
         // Here we want to store the JWT token globally after login to then use on verified routes
-        next: (response) => console.log("Token : " + JSON.stringify(response.body)),
-        error: (error) => console.log(error),
+        next: (response) => {
+          this.storageService.set(response.jwt);
+          console.log(JSON.stringify(response.jwt));
+          this.isLoginFailed = false;
+          this.isLoggedIn = true;
+        },
+        error: (error) => { 
+          console.log(error);
+          this.isLoginFailed = true;
+        }
       });
   }
 }

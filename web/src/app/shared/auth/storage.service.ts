@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
 
-  constructor() {}
+  constructor(private cookie: CookieService) {}
 
-  clean(): void {
-    window.sessionStorage.clear();
+  public clean() {
+    this.cookie.deleteAll();
   }
 
-  public set(key: string, value: string) {
-    window.sessionStorage.removeItem(key);
-    window.sessionStorage.setItem(key, value);
+  public set(user: any) {
+    this.cookie.delete(user);
+    // HTTPOnly aka Secureflag set to true when SSL implemented
+    // this.cookie.set('token', user, 7, '/', 'localhost, true, Strict);
+    this.cookie.set('token', user, 7, '/');
   }
 
   public get(key: string) {
-      return localStorage.getItem(key);
+      return this.cookie.get(key);
   }
 }
