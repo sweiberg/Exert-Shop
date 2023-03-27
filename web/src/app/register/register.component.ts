@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavigationExtras, Router } from '@angular/router'
+import { AuthService } from '../shared/auth/auth.service'
 
 @Component({ templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
@@ -11,7 +12,7 @@ export class RegisterComponent implements OnInit {
     hide = true;
     form: FormGroup;
 
-    constructor(private router: Router, public fb: FormBuilder, private http: HttpClient) {
+    constructor(private router: Router, public fb: FormBuilder, private http: HttpClient, private authService: AuthService) {
       this.form = this.fb.group({
         username: new FormControl('', [Validators.required]),
         email: new FormControl('', [Validators.required, Validators.email]),
@@ -23,11 +24,15 @@ export class RegisterComponent implements OnInit {
     onSubmit(){
         console.log(JSON.stringify(this.form.value));
 
-        return this.http.post('http://localhost:4300/auth/register', this.form.value, {
-          headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response'
-        })
+        const username = this.form.controls['username'].value;
+        const email = this.form.controls['email'].value;
+        const password = this.form.controls['password'].value;
+
+        this.authService.register(username, email, password)
         .subscribe({
-          next: (response) => this.router.navigate(['/login'], {queryParams: { registered: 'true' } }),
+          next: (response) => {
+            this.router.navigate(['/login'], {queryParams: { registered: 'true' } })
+          },
           error: (error) => console.log(error),
         });
     }

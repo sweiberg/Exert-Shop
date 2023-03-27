@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
           console.log(JSON.stringify(response.jwt));
           this.isLoginFailed = false;
           this.isLoggedIn = true;
+          this.router.navigate(['/profile']);
         },
         error: (error) => { 
           console.log(error);
