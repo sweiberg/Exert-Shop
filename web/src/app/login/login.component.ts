@@ -15,7 +15,15 @@ export class LoginComponent implements OnInit {
   congrats = '';
   form: FormGroup;
 
-  constructor(private route:ActivatedRoute, private router:Router, public fb: FormBuilder, private http: HttpClient, private _snackBar: MatSnackBar, private storageService: StorageService, private authService: AuthService) {
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router, 
+    public fb: FormBuilder, 
+    private http: HttpClient, 
+    private _snackBar: MatSnackBar, 
+    private storageService: StorageService, 
+    private authService: AuthService) 
+    {
     this.form = this.fb.group({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -31,7 +39,6 @@ export class LoginComponent implements OnInit {
           this.isLoggedIn = true;
         }, 
         error: (error) => {
-          console.log(error);
           this.isLoggedIn = false;
         }
       });
@@ -57,7 +64,9 @@ export class LoginComponent implements OnInit {
           console.log(JSON.stringify(response.jwt));
           this.isLoginFailed = false;
           this.isLoggedIn = true;
+          this.authService.isLoggedIn = true;
           this.router.navigate(['/profile']);
+          location.reload();
         },
         error: (error) => { 
           console.log(error);

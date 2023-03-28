@@ -12,6 +12,8 @@ const httpOptions = {
 export class AuthService {
   constructor(private http: HttpClient) {}
 
+  public isLoggedIn: boolean;
+
   login(username: string, password: string): Observable<any> {
     return this.http.post(
       'http://localhost:4300/auth/login',

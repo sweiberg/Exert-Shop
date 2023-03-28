@@ -3,7 +3,6 @@
 <mat-toolbar color="primary"><div class="centered-text">Save 30% with&nbsp;<code>FLEXMONDAY30</code></div></mat-toolbar>
   <mat-toolbar style="min-height:90px; padding: 0 120px;">
           <a routerLink="/" id="title" class="nav-button" style="padding-right: 0"><h2 style="margin:0">Exert Shop</h2></a>
-          <!-- <div class ="flex-spacer"></div> -->
           <div id="search">
           <form class="example-form">
             <mat-form-field class="example-full-width" appearance="outline">
@@ -26,7 +25,6 @@
           </form>
         </div>
 
-          <!-- <div class ="flex-spacer"></div> -->
           <button mat-icon-button [matMenuTriggerFor]="user"><mat-icon aria-label="User Profile">account_circle</mat-icon></button>
           <button mat-icon-button><mat-icon aria-label="View Lists">view_list</mat-icon></button>
           <button mat-icon-button><mat-icon matBadge="3" aria-label="Shopping Cart">shopping_cart</mat-icon></button>
@@ -49,9 +47,12 @@
   </mat-menu>
 
   <mat-menu #user="matMenu">
-    <button mat-menu-item>Profile</button>
-    <button mat-menu-item>Settings</button>
-    <button mat-menu-item>Logout</button>
+    <!-- If Logged In-->
+    <button mat-menu-item *ngIf="isLoggedIn == true" (click)="Profile()">Profile</button>
+    <button mat-menu-item *ngIf="isLoggedIn == true" (click)="Logout()">Logout</button>
+    <!-- If Logged Out-->
+    <button mat-menu-item *ngIf="isLoggedIn == false" (click)="Login()">User Login</button>
+    <button mat-menu-item *ngIf="isLoggedIn == false" (click)="Register()">Registration</button>
   </mat-menu>
 
   <mat-menu #electronics="matMenu">

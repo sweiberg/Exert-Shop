@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth/auth.service';
 
 @Component({
@@ -8,11 +9,22 @@ import { AuthService } from '../shared/auth/auth.service';
 })
 export class ProfileComponent implements OnInit  {
 
-  constructor(private authService: AuthService) {}
+  isLoggedIn = false;
 
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     this.authService.verify()
-      .subscribe({next: (response) => {console.log(JSON.stringify(response))}, error: (error) => {console.log(error)}});
+      .subscribe({
+        next: (response) => {
+          this.isLoggedIn = true;
+          console.log(JSON.stringify(response));
+        }, 
+        error: (error) => {
+          this.isLoggedIn = false;
+          this.router.navigate(['/login']);
+          console.log(error);
+        }
+    });
   }
 }

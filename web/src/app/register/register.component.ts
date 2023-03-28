@@ -11,12 +11,10 @@ export class RegisterComponent implements OnInit {
       this.authService.verify()
       .subscribe({
         next: (response) => {
-          console.log(JSON.stringify(response));
           this.router.navigate(['/profile']);
           this.isLoggedIn = true;
         }, 
         error: (error) => {
-          console.log(error);
           this.isLoggedIn = false;
         }
       });
