@@ -44,6 +44,7 @@ func loadRoutes() {
 	publicAPI := router.Group("/api")
 	publicAPI.GET("/product/:id", controller.ViewProduct)
 	publicAPI.GET("/category/:id", controller.ViewCategory)
+	publicAPI.GET("/profile/:id", controller.ViewProfile)
 
 	protectedAPI := router.Group("/api")
 	protectedAPI.Use(middleware.VerifyJWT())
