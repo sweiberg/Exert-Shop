@@ -6,8 +6,23 @@ import { AuthService } from '../shared/auth/auth.service'
 
 @Component({ templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
-    ngOnInit() {}
 
+    ngOnInit() {
+      this.authService.verify()
+      .subscribe({
+        next: (response) => {
+          console.log(JSON.stringify(response));
+          this.router.navigate(['/profile']);
+          this.isLoggedIn = true;
+        }, 
+        error: (error) => {
+          console.log(error);
+          this.isLoggedIn = false;
+        }
+      });
+    }
+    
+    isLoggedIn = false;
     title: String = 'User Registration';
     hide = true;
     form: FormGroup;

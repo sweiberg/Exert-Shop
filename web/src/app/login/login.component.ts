@@ -23,6 +23,19 @@ export class LoginComponent implements OnInit {
    }
 
     ngOnInit() {
+      this.authService.verify()
+      .subscribe({
+        next: (response) => {
+          console.log(JSON.stringify(response));
+          this.router.navigate(['/profile']);
+          this.isLoggedIn = true;
+        }, 
+        error: (error) => {
+          console.log(error);
+          this.isLoggedIn = false;
+        }
+      });
+
       this.route.queryParams
       .subscribe(params => {
         if(params['registered'] !== undefined && params['registered'] === 'true') {
