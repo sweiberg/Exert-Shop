@@ -52,13 +52,16 @@ func loadRoutes() {
 	router := gin.Default()
 	router.Use(CORS())
 
-	publicRoutes := router.Group("/auth")
-	publicRoutes.POST("/register", controller.Register)
-	publicRoutes.POST("/login", controller.Login)
+	authAPI := router.Group("/auth")
+	authAPI.POST("/register", controller.Register)
+	authAPI.POST("/login", controller.Login)
 
-	protectedRoutes := router.Group("/api")
-	protectedRoutes.Use(middleware.VerifyJWT())
-	protectedRoutes.POST("/addproduct", controller.AddProduct)
+	publicAPI := router.Group("/api")
+	publicAPI.GET("/viewproduct/:id", controller.ViewProduct)
+
+	protectedAPI := router.Group("/api")
+	protectedAPI.Use(middleware.VerifyJWT())
+	protectedAPI.POST("/addproduct", controller.AddProduct)
 
 	router.Run(":4300")
 

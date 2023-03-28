@@ -34,3 +34,15 @@ func (product *Product) Create() (*Product, error) {
 
 	return product, nil
 }
+
+func GetProductByID(id uint64) (Product, error) {
+	var product Product
+
+	err := db.Database.Where("id=?", id).Find(&product).Error
+
+	if err != nil {
+		return Product{}, err
+	}
+
+	return product, nil
+}
