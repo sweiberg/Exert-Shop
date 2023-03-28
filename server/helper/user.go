@@ -16,7 +16,7 @@ func GetThisUser(context *gin.Context) (model.User, error) {
 
 	token, _ := GetHeaderJWT(context)
 	claims, _ := token.Claims.(jwt.MapClaims)
-	uid := uint(claims["id"].(float64))
+	uid := uint64(claims["id"].(float64))
 
 	user, err := model.GetUserByID(uid)
 
