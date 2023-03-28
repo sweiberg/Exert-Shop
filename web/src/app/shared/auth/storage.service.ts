@@ -5,21 +5,26 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class StorageService {
+  TOKEN_KEY = 'token';
 
   constructor(private cookie: CookieService) {}
 
   public clean() {
-    this.cookie.deleteAll();
+    this.cookie.delete(this.TOKEN_KEY);
   }
 
-  public set(user: any) {
-    this.cookie.delete(user);
+  public set(key: any) {
+    this.cookie.delete(key);
     // HTTPOnly aka Secureflag set to true when SSL implemented
     // this.cookie.set('token', user, 7, '/', 'localhost, true, Strict);
-    this.cookie.set('token', user, 7, '/');
+    this.cookie.set(this.TOKEN_KEY, key, 7, '/');
   }
 
-  public get(key: string) {
-      return this.cookie.get(key);
+  get token() {
+      return this.cookie.get(this.TOKEN_KEY);
+  }
+
+  get authenticated() {
+    return !!this.cookie.get(this.TOKEN_KEY);
   }
 }

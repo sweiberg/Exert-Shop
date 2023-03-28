@@ -34,4 +34,13 @@ export class AuthService {
       httpOptions
     );
   }
+
+  verify(): Observable<any> {
+    return this.http.get(
+      'http://localhost:4300/auth/authorize',
+      {
+      }
+    );
+  }
+
 }

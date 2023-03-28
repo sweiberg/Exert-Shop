@@ -33,8 +33,6 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit(): void {
-      console.log(JSON.stringify(this.form.value));
-
       const username = this.form.controls['username'].value;
       const password = this.form.controls['password'].value;
 

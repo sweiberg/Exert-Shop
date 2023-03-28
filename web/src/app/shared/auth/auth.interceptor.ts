@@ -18,12 +18,12 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private injector: Injector, private router: Router, private cookieService: CookieService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token: string = this.cookieService.get('auth_token');
+    const token = this.cookieService.get('token');
 
     req = req.clone({
-      withCredentials: true,
+      headers: req.headers.set('Authorization', 'Bearer ' + token)
     });
 
     return next.handle(req);
   }
-}
+}908

@@ -56,6 +56,7 @@ func loadRoutes() {
 	publicRoutes := router.Group("/auth")
 	publicRoutes.POST("/register", controller.Register)
 	publicRoutes.POST("/login", controller.Login)
+	publicRoutes.GET("/authorize", controller.Authorize)
 
 	protectedRoutes := router.Group("/api")
 	protectedRoutes.Use(middleware.VerifyJWT())

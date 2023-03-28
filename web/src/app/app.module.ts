@@ -1,5 +1,5 @@
 import { NgModule, OnInit } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
@@ -57,6 +57,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { ProfileComponent } from './profile';
+import { AuthInterceptor } from './shared/auth/auth.interceptor'
 
 @NgModule({
   declarations: [
@@ -124,7 +125,11 @@ import { ProfileComponent } from './profile';
     FontAwesomeModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [{    
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
