@@ -67,5 +67,5 @@ func Login(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"jwt": jwt, "username": user.Username, "userid": user.ID})
+	context.JSON(http.StatusOK, gin.H{"jwt": jwt})
 }
