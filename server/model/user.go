@@ -58,7 +58,7 @@ func GetUserByName(username string) (User, error) {
 	return user, nil
 }
 
-func GetUserByID(id uint) (User, error) {
+func GetUserByID(id uint64) (User, error) {
 	var user User
 
 	err := db.Database.Where("id=?", id).Find(&user).Error

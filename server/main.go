@@ -21,7 +21,8 @@ func loadDB() {
 	db.Connect()
 	db.Database.AutoMigrate(&model.User{})
 	db.Database.AutoMigrate(&model.Product{})
-	db.Database.AutoMigrate(&model.Message{})
+  db.Database.AutoMigrate(&model.Message{})
+  db.Database.AutoMigrate(&model.Category{})
 }
 
 func loadEnv() {
@@ -34,20 +35,23 @@ func loadEnv() {
 
 func loadRoutes() {
 	router := gin.Default()
-
 	router.Use(middleware.CORS())
-	router.Use(middleware.ErrorHandler)
 
-	auth := router.Group("/auth")
-	auth.POST("/register", controller.Register)
-	auth.POST("/login", controller.Login)
-	auth.POST("/test", controller.Test)
+	authAPI := router.Group("/auth")
+	authAPI.POST("/register", controller.Register)
+	authAPI.POST("/login", controller.Login)
 
-	api := router.Group("/api")
-	api.Use(middleware.VerifyJWT())
-	api.POST("/addproduct", controller.AddProduct)
-	api.POST("/sendmessage", controller.SendMessage)
-	api.GET("/viewmessage/:id", controller.ViewMessage)
+	publicAPI := router.Group("/api")
+	publicAPI.GET("/product/:id", controller.ViewProduct)
+	publicAPI.GET("/category/:id", controller.ViewCategory)
+	publicAPI.GET("/profile/:id", controller.ViewProfile)
+
+	protectedAPI := router.Group("/api")
+	protectedAPI.Use(middleware.VerifyJWT())
+	protectedAPI.POST("/addproduct", controller.AddProduct)
+	protectedAPI.POST("/addcategory", controller.AddCategory)
+  protectedAPI.POST("/sendmessage", controller.SendMessage)
+	protectedAPI.GET("/viewmessage/:id", controller.ViewMessage)
 
 	router.Run(":4300")
 }

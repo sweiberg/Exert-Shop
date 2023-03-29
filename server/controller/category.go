@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"exert-shop/helper"
 	"exert-shop/model"
 	"net/http"
 	"strconv"
@@ -9,8 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddProduct(context *gin.Context) {
-	var input model.Product
+func AddCategory(context *gin.Context) {
+	var input model.Category
 
 	if err := context.ShouldBindJSON(&input); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -18,7 +17,7 @@ func AddProduct(context *gin.Context) {
 		return
 	}
 
-	user, err := helper.GetThisUser(context)
+	newCategory, err := input.Create()
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -26,20 +25,10 @@ func AddProduct(context *gin.Context) {
 		return
 	}
 
-	input.SellerID = user.ID
-
-	newProduct, err := input.Create()
-
-	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
-		return
-	}
-
-	context.JSON(http.StatusCreated, gin.H{"data": newProduct})
+	context.JSON(http.StatusCreated, gin.H{"data": newCategory})
 }
 
-func ViewProduct(context *gin.Context) {
+func ViewCategory(context *gin.Context) {
 	id, err := strconv.ParseUint(context.Param("id"), 10, 64)
 
 	if err != nil {
@@ -48,7 +37,7 @@ func ViewProduct(context *gin.Context) {
 		return
 	}
 
-	product, err := model.GetProductByID(id)
+	category, err := model.GetCategoryByID(id)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -56,5 +45,5 @@ func ViewProduct(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"data": product})
+	context.JSON(http.StatusOK, gin.H{"data": category})
 }
