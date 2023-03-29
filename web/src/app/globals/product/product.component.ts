@@ -10,4 +10,8 @@ import {Product} from '../../schema/product.schema';
 export class ProductComponent {
   faShoppingCart = faShoppingCart;
   @Input() product: Product;
+
+  addToCart(product: Product) {
+    console.log(product);
+  }
 }

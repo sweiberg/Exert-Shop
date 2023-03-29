@@ -97,7 +97,10 @@ export class AddProductComponent {
       headers: { 'Content-Type': 'application/json', 'Authorization': JWT }, responseType: 'json', observe: 'response'
     })
       .subscribe({
-        next: (response) => console.log(response),
+        next: (response) => {
+          console.log(response)
+          this.router.navigate(['/admin/add_product']);
+        },
         error: (error) => console.log(error),
       });
   }
