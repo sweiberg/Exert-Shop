@@ -11,7 +11,7 @@ export class RegisterComponent implements OnInit {
       this.authService.verify()
       .subscribe({
         next: (response) => {
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/profile'], {queryParams: {user: JSON.stringify(response.data)}});
           this.isLoggedIn = true;
         }, 
         error: (error) => {
@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
       });
     }
     
-    isLoggedIn = false;
+    isLoggedIn = true;
     title: String = 'User Registration';
     hide = true;
     form: FormGroup;
@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
         this.authService.register(username, email, password)
         .subscribe({
           next: (response) => {
-            this.router.navigate(['/login'], {queryParams: { registered: 'true' } })
+            this.router.navigate(['/login'], {queryParams: { registered: 'true' }})
           },
           error: (error) => console.log(error),
         });

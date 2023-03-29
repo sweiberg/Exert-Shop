@@ -38,11 +38,14 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthService, private storageService: StorageService) {}
 
+  public user: any;
+  
   ngOnInit() {
     this.authService.verify()
     .subscribe({
       next: (response) => {
         this.isLoggedIn = true;
+        this.user = response;
       }, 
       error: (error) => {
         this.isLoggedIn = false;
@@ -70,7 +73,7 @@ export class AppComponent implements OnInit {
   }
 
   Profile() {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/profile'], {queryParams: {user: this.user.data}});
   }
 
   Logout() {

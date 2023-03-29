@@ -10,7 +10,7 @@ import { StorageService } from '../shared/auth/storage.service'
 export class LoginComponent implements OnInit {
   title: String = 'User Login';
   hide = true;
-  isLoggedIn = false;
+  isLoggedIn = true;
   isLoginFailed = false;
   congrats = '';
   form: FormGroup;
@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log(JSON.stringify(response));
-          this.router.navigate(['/profile']);
           this.isLoggedIn = true;
+          this.router.navigate(['/profile'], {queryParams: {user: JSON.stringify(response.data)}});
         }, 
         error: (error) => {
           this.isLoggedIn = false;
@@ -60,12 +60,11 @@ export class LoginComponent implements OnInit {
       .subscribe({
         // Here we want to store the JWT token globally after login to then use on verified routes
         next: (response) => {
-          this.storageService.set(response.jwt);
-          console.log(JSON.stringify(response.jwt));
+          this.storageService.set(response);
           this.isLoginFailed = false;
           this.isLoggedIn = true;
           this.authService.isLoggedIn = true;
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/profile'], {queryParams: {user: JSON.stringify(response.data)}});
           location.reload();
         },
         error: (error) => { 

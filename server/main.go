@@ -53,10 +53,13 @@ func loadRoutes() {
 	router := gin.Default()
 	router.Use(CORS())
 
-	publicRoutes := router.Group("/auth")
-	publicRoutes.POST("/register", controller.Register)
-	publicRoutes.POST("/login", controller.Login)
-	publicRoutes.GET("/authorize", controller.Authorize)
+	authAPI := router.Group("/auth")
+	authAPI.POST("/register", controller.Register)
+	authAPI.POST("/login", controller.Login)
+	authAPI.GET("/authorize", controller.Authorize)
+
+	publicAPI := router.Group("/api")
+	publicAPI.GET("/profile/:id", controller.ViewProfile)
 
 	protectedRoutes := router.Group("/api")
 	protectedRoutes.Use(middleware.VerifyJWT())

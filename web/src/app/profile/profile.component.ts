@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../shared/auth/auth.service';
+import { ProfileService } from '../shared/user/profile.service'
+import { StorageService } from '../shared/auth/storage.service'
 
 @Component({
   selector: 'app-profile',
@@ -10,19 +12,30 @@ import { AuthService } from '../shared/auth/auth.service';
 export class ProfileComponent implements OnInit  {
 
   isLoggedIn = false;
-
-  constructor(private router: Router, private authService: AuthService) {}
+  isProfile = false;
+  user: any;
+  avatar: any;
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private profileService: ProfileService, private storageService: StorageService) {}
 
   ngOnInit() {
-    this.authService.verify()
+    const filter = this.route.snapshot.queryParamMap.get('user');
+    console.log(filter); // Pepperoni
+
+    if (filter == this.storageService.user) {
+      this.isProfile = true;
+    }
+
+    this.profileService.accessProfile(filter)
       .subscribe({
         next: (response) => {
           this.isLoggedIn = true;
-          console.log(JSON.stringify(response));
+          this.user = response.data;
+          console.log(response);
+          this.avatar = this.user.username.charAt(0).toUpperCase();
         }, 
         error: (error) => {
           this.isLoggedIn = false;
-          this.router.navigate(['/login']);
+          this.router.navigate(['/']);
           console.log(error);
         }
     });
