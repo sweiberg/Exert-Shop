@@ -8,6 +8,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './shared/auth/auth.service'
 import { Router } from '@angular/router';
 import { StorageService } from './shared/auth/storage.service';
+import data from 'src/app/searchdata.json';
+import {Product} from "./schema/product.schema";
+import {HttpClient} from "@angular/common/http";
+import {ProductService} from "./service/product.service";
 
 interface Search {
   title: string;
@@ -21,20 +25,27 @@ interface Search {
   styleUrls: ['./app.component.css'],
   providers: [AuthService]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit{
   title: String = 'Exert Shop';
   isLoggedIn = false;
   myControl = new FormControl('');
-
   search: Search[] = data;
 
   options: string[] = this.search.map(search => search.title);
   category: string[] = this.search.map(search => search.cat);
-  cartLength: number = 0;
   filteredOptions!: Observable<string[]>;
+  cartLength: number = 0;
   @ViewChild(MatMenuTrigger, { static: false })
   trigger!: MatMenuTrigger;
   recheckIfInMenu!: boolean;
+  showCart: boolean = false;
+  cartItems: Product[];
+  productInfo: ProductService;
+
+
+  constructor(private http: HttpClient, public productService: ProductService) {
+    this.productInfo = {} as ProductService;
+  }
 
   constructor(private router: Router, private authService: AuthService, private storageService: StorageService) {}
 
@@ -56,9 +67,38 @@ export class AppComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value || '')),
     );
-    let cart = JSON.parse(localStorage.getItem('productIDList') || '[]');
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
     this.cartLength = cart.length;
     this.recheckIfInMenu = false;
+  }
+
+
+  async getCart() {
+    let cartStorage = JSON.parse(localStorage.getItem('cart') || '[]');
+    console.log(cartStorage);
+    this.cartItems = [];
+    for (let i = 0; i < cartStorage.length; i++) {
+      (await this.productService.getProduct(cartStorage[i])).subscribe({
+        next: (response) => {
+          let data = response.body.data;
+          let imgURL = data.imageURL;
+          let tag = data.tags;
+          if (response.status == 200) {
+            let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, tag, imgURL, data.description,);
+            product.id = data.ID;
+            this.cartItems.push(product);
+          }
+        }
+      });
+    }
+  }
+
+   async openCart(){
+    this.getCart().then(() => {
+      console.log("Finished")
+      console.log(this.cartItems)
+      this.showCart = true;
+    });
   }
 
   openResourceMenu() {
@@ -96,9 +136,6 @@ export class AppComponent implements OnInit {
     console.log("Cart Length Updated");
   }
 
-  getCart(){
-    console.log("Cart Open")
-  }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();

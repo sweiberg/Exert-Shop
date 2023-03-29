@@ -25,9 +25,20 @@
           </form>
         </div>
 
+
+          <!-- <div class ="flex-spacer"></div> -->
+
           <button mat-icon-button [matMenuTriggerFor]="user"><mat-icon aria-label="User Profile">account_circle</mat-icon></button>
           <button mat-icon-button><mat-icon aria-label="View Lists">view_list</mat-icon></button>
-          <button (click)=getCart() mat-icon-button><mat-icon matBadge={{cartLength}} aria-label="Shopping Cart">shopping_cart</mat-icon></button>
+          <button (click)=openCart() mat-icon-button><mat-icon matBadge={{cartLength}} aria-label="Shopping Cart">shopping_cart</mat-icon>
+
+            <mat-card *ngIf=showCart>
+              <mat-card-content>
+                <mat-card-title>Cart</mat-card-title>
+                <mat-card-subtitle>{{cartItems[0].name}}</mat-card-subtitle>
+              </mat-card-content>
+            </mat-card>
+          </button>
   </mat-toolbar>
   <mat-toolbar style="padding: 0 120px;">
     <a class="nav-button" [matMenuTriggerFor]="deals">Best Deals</a>
@@ -61,6 +72,7 @@
     <button mat-menu-item>Computer Hardware</button>
     <button mat-menu-item>Cell Phones</button>
   </mat-menu>
+
 
   <!-- main content container -->
   <div class="jumbotron">
