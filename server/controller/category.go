@@ -45,5 +45,5 @@ func ViewCategory(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"data": category.Products})
+	context.JSON(http.StatusOK, gin.H{"data": category})
 }

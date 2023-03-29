@@ -40,14 +40,6 @@ func AddProduct(context *gin.Context) {
 }
 
 func ViewProduct(context *gin.Context) {
-	var input model.Product
-
-	if err := context.ShouldBindJSON(&input); err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
-		return
-	}
-
 	id, err := strconv.ParseUint(context.Param("id"), 10, 64)
 
 	if err != nil {

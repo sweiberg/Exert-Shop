@@ -5,7 +5,7 @@ import "fmt"
 type USD uint64
 
 // Convert a 64 bit float value to a USD value
-func ToUSD(value float64) USD {
+func FloatToUSD(value float64) USD {
 	return USD((value * 100) + 0.5)
 }
 
@@ -22,4 +22,9 @@ func (value USD) String() string {
 // Multiply a USD value by a 64 bit float value
 func (USDValue USD) Multiply(floatValue float64) USD {
 	return USD((float64(USDValue) * floatValue) + 0.5)
+}
+
+// Divide a USD value by a 64 bit float value
+func (USDValue USD) Divide(floatValue float64) USD {
+	return USD((float64(USDValue) / floatValue) + 0.5)
 }

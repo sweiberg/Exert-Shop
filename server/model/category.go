@@ -27,7 +27,7 @@ func (category *Category) Create() (*Category, error) {
 func GetCategoryByID(id uint64) (Category, error) {
 	var category Category
 
-	err := db.Database.Where("id=?", id).Find(&category).Error
+	err := db.Database.Preload("Products").Where("id=?", id).Find(&category).Error
 
 	if err != nil {
 		return Category{}, err

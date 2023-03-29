@@ -1,6 +1,7 @@
 package test
 
 import (
+	"exert-shop/currency"
 	"io"
 	"net/http"
 	"strings"
@@ -14,16 +15,16 @@ func GetUserJWT(t *testing.T) string {
 	request, err := http.NewRequest("POST", "http://localhost:4300/auth/login", data)
 
 	if err != nil {
-		t.Fatal(err)
 		t.Log("Failed to process the login request.")
+		t.Fatal(err)
 	}
 
 	request.Header.Set("Content-Type", "application/json")
 	response, err := client.Do(request)
 
 	if err != nil {
-		t.Fatal(err)
 		t.Log("Failed to receive a login response.")
+		t.Fatal(err)
 	}
 
 	defer response.Body.Close()
@@ -31,15 +32,15 @@ func GetUserJWT(t *testing.T) string {
 	bodyText, err := io.ReadAll(response.Body)
 
 	if err != nil {
-		t.Fatal(err)
 		t.Log("Failed to retrieve a user JWT.")
+		t.Fatal(err)
 	}
 
 	jwtString := strings.TrimLeft(strings.TrimRight(string(bodyText), "\"}"), "{\"jwt\":\"")
 
 	if jwtString == "" {
-		t.Fatal(err)
 		t.Log("The JWT retrieved was unable to be trimmed. The resulting string is empty.")
+		t.Fatal(err)
 	}
 
 	return jwtString
@@ -52,16 +53,16 @@ func TestCreateUser(t *testing.T) {
 	request, err := http.NewRequest("POST", "http://localhost:4300/auth/register", data)
 
 	if err != nil {
-		t.Fatal(err)
 		t.Log("User creation failed to process the request.")
+		t.Fatal(err)
 	}
 
 	request.Header.Set("Content-Type", "application/json")
 	response, err := client.Do(request)
 
 	if err != nil {
-		t.Fatal(err)
 		t.Log("User creation failed to receive a response.")
+		t.Fatal(err)
 	}
 
 	t.Log("User creation test passed.")
@@ -85,8 +86,8 @@ func TestAddCategory(t *testing.T) {
 	request, err := http.NewRequest("POST", "http://localhost:4300/api/addcategory", data)
 
 	if err != nil {
-		t.Fatal(err)
 		t.Log("Add category failed to process the request.")
+		t.Fatal(err)
 	}
 
 	request.Header.Set("Content-Type", "application/json")
@@ -94,8 +95,8 @@ func TestAddCategory(t *testing.T) {
 	response, err := client.Do(request)
 
 	if err != nil {
-		t.Fatal(err)
 		t.Log("Add category failed to process the response.")
+		t.Fatal(err)
 	}
 
 	defer response.Body.Close()
@@ -117,15 +118,14 @@ func TestAddProduct(t *testing.T) {
 		"finalPrice" : 8862,
 
 		"CategoryID" : 1,
-		"SellerID" : 1,
 		"BuyerID" : 1
 	}`)
 
 	request, err := http.NewRequest("POST", "http://localhost:4300/api/addproduct", data)
 
 	if err != nil {
-		t.Fatal(err)
 		t.Log("Add product failed to process the request.")
+		t.Fatal(err)
 	}
 
 	request.Header.Set("Content-Type", "application/json")
@@ -133,11 +133,41 @@ func TestAddProduct(t *testing.T) {
 	response, err := client.Do(request)
 
 	if err != nil {
-		t.Fatal(err)
 		t.Log("Add product failed to process the response.")
+		t.Fatal(err)
 	}
 
 	defer response.Body.Close()
 
 	t.Log("Product add test passed.")
+}
+
+func TestCurrencyMultiply(t *testing.T) {
+	cost := currency.FloatToUSD(float64(18.32))
+	var tax float64 = 0.065
+
+	got := cost.Multiply(tax)
+	want := currency.FloatToUSD(float64(1.19))
+
+	if want != got {
+		t.Errorf("Expected %q but got %q", want, got)
+		t.Fatal("Currency multiplication test failed.")
+	}
+
+	t.Log("Currency multiplication test passed.")
+}
+
+func TestCurrencyDivide(t *testing.T) {
+	cost := currency.FloatToUSD(float64(18.32))
+	var tax float64 = 0.065
+
+	got := cost.Divide(tax)
+	want := currency.FloatToUSD(float64(281.85))
+
+	if want != got {
+		t.Errorf("Expected %q but got %q", want, got)
+		t.Fatal("Currency division test failed.")
+	}
+
+	t.Log("Currency division test passed.")
 }
