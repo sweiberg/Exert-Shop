@@ -9,12 +9,10 @@ export class ProductHomeComponent{
   productList:Product[] = [];
   constructor(private http: HttpClient){
     // This is a temporary solution to get the products
-    let productAmount = 4;
-    let JWT = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlYXQiOjE2ODAwNzE4MjcsImlhdCI6MTY4MDA2OTgyNywiaWQiOjN9.6okYeQU2Mr7NBqMmreWTXvWwDHvMndU5w0W-u-NGq8M';
-    // This will be replaced by a call to the backend to get the products
-    for(let i = 0; i < productAmount; i++){
+    let productAmount = 5;// This will be replaced by a call to the backend to get the products
+    for(let i = 1; i < productAmount+1; i++){
       this.http.get('http://localhost:4300/api/product/'+i,{
-        headers: { 'Content-Type': 'application/json', 'Authorization': JWT }, responseType: 'json', observe: 'response'
+        headers: { 'Content-Type': 'application/json'}, responseType: 'json', observe: 'response'
       })
         .subscribe({
           next: (response) => {

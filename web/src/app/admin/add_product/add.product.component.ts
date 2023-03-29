@@ -2,13 +2,13 @@ import {Component} from '@angular/core';
 import {Product} from "../../schema/product.schema";
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({templateUrl: 'add.product.html'})
 export class AddProductComponent {
   title: string;
   form: FormGroup;
-  constructor(private route:ActivatedRoute, private router:Router, public fb: FormBuilder, private http: HttpClient) {
+  constructor( private router:Router, public fb: FormBuilder, private http: HttpClient) {
     this.form = this.fb.group({
       name: new FormControl('', []),
       originalPrice: new FormControl('', []),
@@ -92,14 +92,21 @@ export class AddProductComponent {
   onSubmit(){
     let form = this.constructAndTrimJSON();
     console.log(form)
-    let JWT = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlYXQiOjE2ODAwNzE4MjcsImlhdCI6MTY4MDA2OTgyNywiaWQiOjN9.6okYeQU2Mr7NBqMmreWTXvWwDHvMndU5w0W-u-NGq8M';
     return this.http.post('http://localhost:4300/api/addproduct', form, {
-      headers: { 'Content-Type': 'application/json', 'Authorization': JWT }, responseType: 'json', observe: 'response'
+      headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response'
     })
       .subscribe({
         next: (response) => {
           console.log(response)
-          this.router.navigate(['/admin/add_product']);
+          //switch to form reset later
+          this.finalPrice.setValue(this.defaultInfo.finalPrice.toString());
+          this.originalPrice.setValue(this.defaultInfo.originalPrice.toString());
+          this.name.setValue(this.defaultInfo.name);
+          this.description.setValue(this.defaultInfo.description);
+          this.category.setValue(this.defaultInfo.category);
+          this.tag.setValue(this.defaultInfo.tag);
+          this.imgURL.setValue(this.defaultInfo.imgURL);
+          location.reload();
         },
         error: (error) => console.log(error),
       });

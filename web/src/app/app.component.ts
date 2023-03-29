@@ -3,15 +3,12 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { MatMenuTrigger } from '@angular/material/menu';
-import data from './searchdata.json';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './shared/auth/auth.service'
 import { Router } from '@angular/router';
 import { StorageService } from './shared/auth/storage.service';
 import data from 'src/app/searchdata.json';
 import {Product} from "./schema/product.schema";
-import {HttpClient} from "@angular/common/http";
-import {ProductService} from "./service/product.service";
+import {ProductService} from "./shared/product/product.service";
 
 interface Search {
   title: string;
@@ -41,23 +38,19 @@ export class AppComponent implements OnInit{
   showCart: boolean = false;
   cartItems: Product[];
   productInfo: ProductService;
-
-
-  constructor(private http: HttpClient, public productService: ProductService) {
+  constructor(private router: Router, private authService: AuthService, private storageService: StorageService, public productService: ProductService) {
     this.productInfo = {} as ProductService;
   }
 
-  constructor(private router: Router, private authService: AuthService, private storageService: StorageService) {}
-
   public user: any;
-  
+
   ngOnInit() {
     this.authService.verify()
     .subscribe({
       next: (response) => {
         this.isLoggedIn = true;
         this.user = response;
-      }, 
+      },
       error: (error) => {
         this.isLoggedIn = false;
       }
