@@ -25,7 +25,7 @@ export class ProductHomeComponent{
             let tag = data.tags;
             if(response.status == 200){
               let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, tag, imgURL, data.description,);
-              product.id = data.id;
+              product.id = data.ID;
               this.productList.push(product);
             }
           },

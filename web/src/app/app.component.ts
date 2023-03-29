@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
 
   options: string[] = this.search.map(search => search.title);
   category: string[] = this.search.map(search => search.cat);
-
+  cartLength: number = 0;
   filteredOptions!: Observable<string[]>;
   @ViewChild(MatMenuTrigger, { static: false })
   trigger!: MatMenuTrigger;
@@ -56,7 +56,8 @@ export class AppComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value || '')),
     );
-
+    let cart = JSON.parse(localStorage.getItem('productIDList') || '[]');
+    this.cartLength = cart.length;
     this.recheckIfInMenu = false;
   }
 
@@ -88,6 +89,15 @@ export class AppComponent implements OnInit {
 
   Register() {
     this.router.navigate(['/register']);
+  }
+  updateCartLength(){
+    let cart = JSON.parse(localStorage.getItem('productIDList') || '[]');
+    this.cartLength = cart.length;
+    console.log("Cart Length Updated");
+  }
+
+  getCart(){
+    console.log("Cart Open")
   }
 
   private _filter(value: string): string[] {
