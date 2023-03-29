@@ -79,9 +79,12 @@ export class AddProductComponent {
   constructAndTrimJSON(){
     let updatedForm = {
       name: this.product.name,
-      description: this.product.description,
-      price: this.product.originalPrice,
-      sellerid: 1
+      finalPrice: this.product.finalPrice,
+      originalPrice: this.product.originalPrice,
+      categoryID: 0,
+      tags: [this.product.tag],
+      imageURL: this.product.imgURL,
+      description: this.product.description
     }
     return JSON.stringify(updatedForm);
   }
@@ -89,11 +92,11 @@ export class AddProductComponent {
   onSubmit(){
     let form = this.constructAndTrimJSON();
     console.log(form)
-    return this.http.post('http://localhost:4300/auth/addproduct', form, {
-      headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response'
+    let JWT = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlYXQiOjE2ODAwNzE4MjcsImlhdCI6MTY4MDA2OTgyNywiaWQiOjN9.6okYeQU2Mr7NBqMmreWTXvWwDHvMndU5w0W-u-NGq8M';
+    return this.http.post('http://localhost:4300/api/addproduct', form, {
+      headers: { 'Content-Type': 'application/json', 'Authorization': JWT }, responseType: 'json', observe: 'response'
     })
       .subscribe({
-        // Here we want to store the JWT token globally after login to then use on verified routes
         next: (response) => console.log(response),
         error: (error) => console.log(error),
       });
