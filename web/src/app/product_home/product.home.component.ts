@@ -9,7 +9,7 @@ export class ProductHomeComponent{
   productList:Product[] = [];
   constructor(private http: HttpClient){
     // This is a temporary solution to get the products
-    let productAmount = 5;// This will be replaced by a call to the backend to get the products
+    let productAmount = 8;// This will be replaced by a call to the backend to get the products
     for(let i = 1; i < productAmount+1; i++){
       this.http.get('http://localhost:4300/api/product/'+i,{
         headers: { 'Content-Type': 'application/json'}, responseType: 'json', observe: 'response'
