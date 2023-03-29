@@ -5,7 +5,6 @@ import (
 	"exert-shop/db"
 	"exert-shop/middleware"
 	"exert-shop/model"
-	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -22,7 +21,8 @@ func loadDB() {
 	db.Connect()
 	db.Database.AutoMigrate(&model.User{})
 	db.Database.AutoMigrate(&model.Product{})
-	db.Database.AutoMigrate(&model.Category{})
+  db.Database.AutoMigrate(&model.Message{})
+  db.Database.AutoMigrate(&model.Category{})
 }
 
 func loadEnv() {
@@ -50,8 +50,8 @@ func loadRoutes() {
 	protectedAPI.Use(middleware.VerifyJWT())
 	protectedAPI.POST("/addproduct", controller.AddProduct)
 	protectedAPI.POST("/addcategory", controller.AddCategory)
+  protectedAPI.POST("/sendmessage", controller.SendMessage)
+	protectedAPI.GET("/viewmessage/:id", controller.ViewMessage)
 
 	router.Run(":4300")
-
-	fmt.Println("Listen server successfully started on port 4300.")
 }
