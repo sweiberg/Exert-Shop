@@ -6,6 +6,7 @@ export class Product{
   tag: string;
   imgURL: string;
   description: string;
+  id?: number;
   constructor(name: string, finalPrice: number, originalPrice: number, category: string, tag: string, imgURL: string, description: string){
     this.name = name;
     this.finalPrice = finalPrice;

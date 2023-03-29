@@ -2,13 +2,13 @@ import {Component} from '@angular/core';
 import {Product} from "../../schema/product.schema";
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({templateUrl: 'add.product.html'})
 export class AddProductComponent {
   title: string;
   form: FormGroup;
-  constructor(private route:ActivatedRoute, private router:Router, public fb: FormBuilder, private http: HttpClient) {
+  constructor( private router:Router, public fb: FormBuilder, private http: HttpClient) {
     this.form = this.fb.group({
       name: new FormControl('', []),
       originalPrice: new FormControl('', []),
@@ -79,9 +79,12 @@ export class AddProductComponent {
   constructAndTrimJSON(){
     let updatedForm = {
       name: this.product.name,
-      description: this.product.description,
-      price: this.product.originalPrice,
-      sellerid: 1
+      finalPrice: this.product.finalPrice,
+      originalPrice: this.product.originalPrice,
+      categoryID: 0,
+      tags: [this.product.tag],
+      imageURL: this.product.imgURL,
+      description: this.product.description
     }
     return JSON.stringify(updatedForm);
   }
@@ -89,12 +92,22 @@ export class AddProductComponent {
   onSubmit(){
     let form = this.constructAndTrimJSON();
     console.log(form)
-    return this.http.post('http://localhost:4300/auth/addproduct', form, {
+    return this.http.post('http://localhost:4300/api/addproduct', form, {
       headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response'
     })
       .subscribe({
-        // Here we want to store the JWT token globally after login to then use on verified routes
-        next: (response) => console.log(response),
+        next: (response) => {
+          console.log(response)
+          //switch to form reset later
+          this.finalPrice.setValue(this.defaultInfo.finalPrice.toString());
+          this.originalPrice.setValue(this.defaultInfo.originalPrice.toString());
+          this.name.setValue(this.defaultInfo.name);
+          this.description.setValue(this.defaultInfo.description);
+          this.category.setValue(this.defaultInfo.category);
+          this.tag.setValue(this.defaultInfo.tag);
+          this.imgURL.setValue(this.defaultInfo.imgURL);
+          location.reload();
+        },
         error: (error) => console.log(error),
       });
   }

@@ -25,9 +25,16 @@
           </form>
         </div>
 
+
+          <!-- <div class ="flex-spacer"></div> -->
+
+
+          <!-- <div class ="flex-spacer"></div> -->
           <button mat-icon-button [matMenuTriggerFor]="user"><mat-icon aria-label="User Profile">account_circle</mat-icon></button>
           <button mat-icon-button><mat-icon aria-label="View Lists">view_list</mat-icon></button>
-          <button mat-icon-button><mat-icon matBadge="3" aria-label="Shopping Cart">shopping_cart</mat-icon></button>
+          <ng-container><button (click)=openCart() mat-icon-button><mat-icon matBadge={{cartLength}} aria-label="Shopping Cart">shopping_cart</mat-icon></button>
+          </ng-container>
+
   </mat-toolbar>
   <mat-toolbar style="padding: 0 120px;">
     <a class="nav-button" [matMenuTriggerFor]="deals">Best Deals</a>
@@ -39,6 +46,19 @@
     <a class="nav-button">Office Supplies</a>
   </mat-toolbar>
   </div>
+
+<mat-card *ngIf=showCart>
+  <mat-card-content>
+    <mat-card-title>Cart</mat-card-title>
+    <mat-list>
+      <mat-list-item *ngFor="let item of cartItems">
+        <a>{{item.name}}</a>
+        <a> ${{(item.tag[0]=='SALE')? item.finalPrice : item.originalPrice}}</a>
+        <button (click)=removeItem(item.id) mat-icon-button><mat-icon>delete</mat-icon></button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
 
   <mat-menu #deals="matMenu">
     <button mat-menu-item>Deals for Kids</button>
@@ -61,6 +81,7 @@
     <button mat-menu-item>Computer Hardware</button>
     <button mat-menu-item>Cell Phones</button>
   </mat-menu>
+
 
   <!-- main content container -->
   <div class="jumbotron">

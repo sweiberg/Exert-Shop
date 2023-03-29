@@ -16,47 +16,47 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    private route: ActivatedRoute, 
-    private router: Router, 
-    public fb: FormBuilder, 
-    private http: HttpClient, 
-    private _snackBar: MatSnackBar, 
-    private storageService: StorageService, 
-    private authService: AuthService) 
-    {
+    private route: ActivatedRoute,
+    private router: Router,
+    public fb: FormBuilder,
+    private http: HttpClient,
+    private _snackBar: MatSnackBar,
+    private storageService: StorageService,
+    private authService: AuthService)
+  {
     this.form = this.fb.group({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
-   }
+  }
 
-    ngOnInit() {
-      this.authService.verify()
+  ngOnInit() {
+    this.authService.verify()
       .subscribe({
         next: (response) => {
           console.log(JSON.stringify(response));
           this.isLoggedIn = true;
           this.router.navigate(['/profile'], {queryParams: {user: JSON.stringify(response.data)}});
-        }, 
+        },
         error: (error) => {
           this.isLoggedIn = false;
         }
       });
 
-      this.route.queryParams
+    this.route.queryParams
       .subscribe(params => {
         if(params['registered'] !== undefined && params['registered'] === 'true') {
-            this.congrats = 'Registration Successful! Please Login!';
-            this._snackBar.open(this.congrats, '', {duration: 99999999999, panelClass: ['simple-snack-bar']});
+          this.congrats = 'Registration Successful! Please Login!';
+          this._snackBar.open(this.congrats, '', {duration: 99999999999, panelClass: ['simple-snack-bar']});
         }
       });
-    }
+  }
 
-    onSubmit(): void {
-      const username = this.form.controls['username'].value;
-      const password = this.form.controls['password'].value;
+  onSubmit(): void {
+    const username = this.form.controls['username'].value;
+    const password = this.form.controls['password'].value;
 
-      this.authService.login(username, password)
+    this.authService.login(username, password)
       .subscribe({
         // Here we want to store the JWT token globally after login to then use on verified routes
         next: (response) => {
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/profile'], {queryParams: {user: JSON.stringify(response.data)}});
           location.reload();
         },
-        error: (error) => { 
+        error: (error) => {
           console.log(error);
           this.isLoginFailed = true;
         }

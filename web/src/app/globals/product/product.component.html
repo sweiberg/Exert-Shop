@@ -8,10 +8,10 @@
     <h4><a href="">{{product.name}}</a></h4>
     <p>{{product.description}}</p>
     <div class="product-bottom-details">
-      <div *ngIf="product.finalPrice!=0 && product.finalPrice<product.originalPrice " class="product-price"><small>${{product.finalPrice}}.00</small>${{product.originalPrice}}.00</div>
+      <div *ngIf="product.finalPrice!=0 && product.finalPrice<product.originalPrice " class="product-price"><small>${{product.originalPrice}}.00</small>${{product.finalPrice}}.00</div>
       <div *ngIf="product.finalPrice==0 || product.finalPrice>=product.originalPrice" class="product-price">${{product.originalPrice}}.00</div>
       <div class="product-links">
-        <a><fa-icon [icon]="faShoppingCart"></fa-icon></a>
+        <a (click)=addToCart(product)><fa-icon [icon]="faShoppingCart"></fa-icon></a>
       </div>
     </div>
   </div>
