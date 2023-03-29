@@ -97,8 +97,17 @@ export class AppComponent implements OnInit{
     this.getCart().then(() => {
       console.log("Finished")
       console.log(this.cartItems)
-      this.showCart = true;
+      this.showCart = !this.showCart;
     });
+  }
+
+  removeItem(id:any){
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    let index = cart.indexOf(id);
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    this.cartLength = cart.length;
+    this.getCart();
   }
 
   openResourceMenu() {
