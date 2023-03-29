@@ -22,6 +22,7 @@ func loadDB() {
 	db.Connect()
 	db.Database.AutoMigrate(&model.User{})
 	db.Database.AutoMigrate(&model.Product{})
+	db.Database.AutoMigrate(&model.Category{})
 }
 
 func loadEnv() {
@@ -32,33 +33,23 @@ func loadEnv() {
 	}
 }
 
-func CORS() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
-
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
-			return
-		}
-
-		c.Next()
-	}
-}
-
 func loadRoutes() {
 	router := gin.Default()
-  router.Use(CORS())
+	router.Use(middleware.CORS())
 
-	publicRoutes := router.Group("/auth")
-	publicRoutes.POST("/register", controller.Register)
-	publicRoutes.POST("/login", controller.Login)
+	authAPI := router.Group("/auth")
+	authAPI.POST("/register", controller.Register)
+	authAPI.POST("/login", controller.Login)
 
-	protectedRoutes := router.Group("/api")
-	protectedRoutes.Use(middleware.VerifyJWT())
-	protectedRoutes.POST("/addproduct", controller.AddProduct)
+	publicAPI := router.Group("/api")
+	publicAPI.GET("/product/:id", controller.ViewProduct)
+	publicAPI.GET("/category/:id", controller.ViewCategory)
+	publicAPI.GET("/profile/:id", controller.ViewProfile)
+
+	protectedAPI := router.Group("/api")
+	protectedAPI.Use(middleware.VerifyJWT())
+	protectedAPI.POST("/addproduct", controller.AddProduct)
+	protectedAPI.POST("/addcategory", controller.AddCategory)
 
 	router.Run(":4300")
 
