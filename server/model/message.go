@@ -9,10 +9,14 @@ import (
 type Message struct {
 	gorm.Model
 
-	UserID   uint
-	SenderID uint   `gorm:"not null" json:"senderid"`
-	Message  string `gorm:"type:text;not null" json:"message"`
-	Subject  string `gorm:"not null" json:"subject"`
+	ParentID   uint
+	SenderID   uint
+	ReceiverID uint
+	Message    string    `gorm:"type:text;not null" json:"message"`
+	Subject    string    `gorm:"not null" json:"subject"`
+	Replies    []Message `gorm:"foreignKey:ParentID"`
+	Sender     User      `gorm:"foreignKey:SenderID"`
+	Receiver   User      `gorm:"foreignKey:ReceiverID"`
 }
 
 func (message *Message) Create() (*Message, error) {
@@ -28,7 +32,7 @@ func (message *Message) Create() (*Message, error) {
 func GetMessageByID(id uint64) (Message, error) {
 	var message Message
 
-	err := db.Database.Where("id=?", id).Find(&message).Error
+	err := db.Database.Preload("Sender").Preload("Receiver").Preload("Replies").Where("id=?", id).Find(&message).Error
 
 	if err != nil {
 		return Message{}, err

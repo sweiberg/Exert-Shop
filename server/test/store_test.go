@@ -1,8 +1,9 @@
 package test
 
 import (
+	"encoding/json"
 	"exert-shop/currency"
-	"io"
+	"fmt"
 	"net/http"
 	"strings"
 	"testing"
@@ -29,21 +30,21 @@ func GetUserJWT(t *testing.T) string {
 
 	defer response.Body.Close()
 
-	bodyText, err := io.ReadAll(response.Body)
+	var bodyJSON map[string]interface{}
+	err = json.NewDecoder(response.Body).Decode(&bodyJSON)
 
 	if err != nil {
-		t.Log("Failed to retrieve a user JWT.")
+		t.Log("Failed to parse the JSON response from the http request.")
 		t.Fatal(err)
 	}
 
-	jwtString := strings.TrimLeft(strings.TrimRight(string(bodyText), "\"}"), "{\"jwt\":\"")
+	jwt := bodyJSON["jwt"]
 
-	if jwtString == "" {
-		t.Log("The JWT retrieved was unable to be trimmed. The resulting string is empty.")
-		t.Fatal(err)
+	if jwt == nil {
+		t.Fatal("Failed to retrieve a user JWT.")
 	}
 
-	return jwtString
+	return fmt.Sprint(jwt)
 }
 
 func TestCreateUser(t *testing.T) {
