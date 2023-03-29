@@ -5,7 +5,6 @@ import (
 	"exert-shop/db"
 	"exert-shop/middleware"
 	"exert-shop/model"
-	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -40,6 +39,7 @@ func loadRoutes() {
 	authAPI := router.Group("/auth")
 	authAPI.POST("/register", controller.Register)
 	authAPI.POST("/login", controller.Login)
+	authAPI.GET("/authorize", controller.Authorize)
 
 	publicAPI := router.Group("/api")
 	publicAPI.GET("/product/:id", controller.ViewProduct)
@@ -52,6 +52,4 @@ func loadRoutes() {
 	protectedAPI.POST("/addcategory", controller.AddCategory)
 
 	router.Run(":4300")
-
-	fmt.Println("Listen server successfully started on port 4300.")
 }

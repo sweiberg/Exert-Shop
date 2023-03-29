@@ -67,5 +67,17 @@ func Login(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"jwt": jwt})
+	context.JSON(http.StatusOK, gin.H{"jwt": jwt, "data": user.ID, "username": user.Username})
+}
+
+func Authorize(context *gin.Context) {
+	user, err := helper.GetThisUser(context)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"data": user.ID, "username": user.Username})
 }
