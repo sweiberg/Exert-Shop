@@ -28,13 +28,11 @@ export class ProfileComponent implements OnInit  {
     this.profileService.accessProfile(filter)
       .subscribe({
         next: (response) => {
-          this.isLoggedIn = true;
           this.user = response.data;
           console.log(response);
           this.avatar = this.user.username.charAt(0).toUpperCase();
         }, 
         error: (error) => {
-          this.isLoggedIn = false;
           this.router.navigate(['/']);
           console.log(error);
         }
