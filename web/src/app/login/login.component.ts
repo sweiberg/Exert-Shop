@@ -2,16 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../shared/auth/auth.service'
+import { StorageService } from '../shared/auth/storage.service'
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
   title: String = 'User Login';
   hide = true;
+  isLoggedIn = true;
+  isLoginFailed = false;
   congrats = '';
   form: FormGroup;
 
-  constructor(private route:ActivatedRoute, private router:Router, public fb: FormBuilder, private http: HttpClient, private _snackBar: MatSnackBar) {
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router, 
+    public fb: FormBuilder, 
+    private http: HttpClient, 
+    private _snackBar: MatSnackBar, 
+    private storageService: StorageService, 
+    private authService: AuthService) 
+    {
     this.form = this.fb.group({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -19,6 +31,18 @@ export class LoginComponent implements OnInit {
    }
 
     ngOnInit() {
+      this.authService.verify()
+      .subscribe({
+        next: (response) => {
+          console.log(JSON.stringify(response));
+          this.isLoggedIn = true;
+          this.router.navigate(['/profile'], {queryParams: {user: JSON.stringify(response.data)}});
+        }, 
+        error: (error) => {
+          this.isLoggedIn = false;
+        }
+      });
+
       this.route.queryParams
       .subscribe(params => {
         if(params['registered'] !== undefined && params['registered'] === 'true') {
@@ -28,16 +52,25 @@ export class LoginComponent implements OnInit {
       });
     }
 
-    onSubmit(){
-      console.log(JSON.stringify(this.form.value));
+    onSubmit(): void {
+      const username = this.form.controls['username'].value;
+      const password = this.form.controls['password'].value;
 
-      return this.http.post('http://localhost:4300/auth/login', this.form.value, {
-        headers: { 'Content-Type': 'application/json' }, responseType: 'json', observe: 'response'
-      })
+      this.authService.login(username, password)
       .subscribe({
         // Here we want to store the JWT token globally after login to then use on verified routes
-        next: (response) => console.log(response),
-        error: (error) => console.log(error),
+        next: (response) => {
+          this.storageService.set(response);
+          this.isLoginFailed = false;
+          this.isLoggedIn = true;
+          this.authService.isLoggedIn = true;
+          this.router.navigate(['/profile'], {queryParams: {user: JSON.stringify(response.data)}});
+          location.reload();
+        },
+        error: (error) => { 
+          console.log(error);
+          this.isLoginFailed = true;
+        }
       });
   }
 }

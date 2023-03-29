@@ -1,0 +1,13 @@
+<div>
+    <div>
+        <mat-card class="profile-card">
+        <div class="avatar"><p>{{avatar}}</p></div>
+        <h1 *ngIf="isProfile">Welcome back, {{user.username}}</h1>
+        <h1 *ngIf="isProfile == false">{{user.username}}</h1>
+        <h3 *ngIf="isProfile">User Settings</h3>
+        <button mat-stroked-button *ngIf="isProfile">Update Password</button>
+        <button mat-stroked-button *ngIf="isProfile">Update Email</button>
+        <button mat-stroked-button *ngIf="isProfile">Contact Support</button>
+        </mat-card>
+    </div>
+</div>

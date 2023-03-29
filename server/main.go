@@ -40,6 +40,7 @@ func loadRoutes() {
 	authAPI := router.Group("/auth")
 	authAPI.POST("/register", controller.Register)
 	authAPI.POST("/login", controller.Login)
+	authAPI.GET("/authorize", controller.Authorize)
 
 	publicAPI := router.Group("/api")
 	publicAPI.GET("/product/:id", controller.ViewProduct)
