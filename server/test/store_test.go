@@ -47,10 +47,10 @@ func GetUserJWT(t *testing.T) string {
 	return fmt.Sprint(jwt)
 }
 
-func TestCreateUser(t *testing.T) {
+func CreateUser(t *testing.T, name string, email string, password string) {
 	client := &http.Client{}
 
-	var data = strings.NewReader(`{"username" : "test", "email" : "test@gmail.com", "password" : "gogators"}`)
+	var data = strings.NewReader(`{"username" : "` + name + `", "email" : "` + email + `", "password" : "` + password + `"}`)
 	request, err := http.NewRequest("POST", "http://localhost:4300/auth/register", data)
 
 	if err != nil {
@@ -66,15 +66,20 @@ func TestCreateUser(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	t.Log("User creation test passed.")
+	t.Logf("User creation for user %v passed.", name)
 
 	defer response.Body.Close()
 }
 
-func TestLoginUser(t *testing.T) {
-	jwtString := GetUserJWT(t)
+func TestCreateUser(t *testing.T) {
+	CreateUser(t, "test", "test@gmail.com", "gogators")
+	CreateUser(t, "test2", "test2@gmail.com", "gogators")
+}
 
-	t.Logf("User login test passed with token: %s", jwtString)
+func TestLoginUser(t *testing.T) {
+	jwt := GetUserJWT(t)
+
+	t.Logf("User login test passed with token: %s", jwt)
 }
 
 func TestAddCategory(t *testing.T) {
@@ -118,8 +123,8 @@ func TestAddProduct(t *testing.T) {
 		"originalPrice" : 3249,
 		"finalPrice" : 8862,
 
-		"CategoryID" : 1,
-		"BuyerID" : 1
+		"categoryID" : 1,
+		"buyerID" : 1
 	}`)
 
 	request, err := http.NewRequest("POST", "http://localhost:4300/api/addproduct", data)
@@ -141,6 +146,40 @@ func TestAddProduct(t *testing.T) {
 	defer response.Body.Close()
 
 	t.Log("Product add test passed.")
+}
+
+func TestAddMessage(t *testing.T) {
+	client := &http.Client{}
+
+	jwt := GetUserJWT(t)
+
+	var data = strings.NewReader(`{
+		"subject" : "Test Message",
+		"message" : "Hello gator nation this is an automatically generated test message.",
+
+		"parentID" : 1,
+		"receiverID" : 2
+	}`)
+
+	request, err := http.NewRequest("POST", "http://localhost:4300/api/sendmessage", data)
+
+	if err != nil {
+		t.Log("Send message failed to process the request.")
+		t.Fatal(err)
+	}
+
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Authorization", "Bearer "+jwt)
+	response, err := client.Do(request)
+
+	if err != nil {
+		t.Log("Send message failed to process the response.")
+		t.Fatal(err)
+	}
+
+	defer response.Body.Close()
+
+	t.Log("Send message test passed.")
 }
 
 func TestCurrencyMultiply(t *testing.T) {
