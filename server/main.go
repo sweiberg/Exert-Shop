@@ -21,6 +21,7 @@ func loadDB() {
 	db.Connect()
 	db.Database.AutoMigrate(&model.User{})
 	db.Database.AutoMigrate(&model.Product{})
+	db.Database.AutoMigrate(&model.Message{})
 	db.Database.AutoMigrate(&model.Category{})
 }
 
@@ -50,6 +51,8 @@ func loadRoutes() {
 	protectedAPI.Use(middleware.VerifyJWT())
 	protectedAPI.POST("/addproduct", controller.AddProduct)
 	protectedAPI.POST("/addcategory", controller.AddCategory)
+	protectedAPI.POST("/sendmessage", controller.SendMessage)
+	protectedAPI.GET("/message/:id", controller.ViewMessage)
 
 	router.Run(":4300")
 }
