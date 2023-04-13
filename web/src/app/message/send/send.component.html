@@ -1,0 +1,28 @@
+<mat-card class="user-form-card" *ngIf="isLoggedIn">
+    <mat-card-header>
+        <mat-card-title id="form-title">Send Message</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+      <form class="user-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label for="recipient">Recipient</mat-label>
+        <input matInput id="Recipient" type="text" formControlName="recipient">
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label for="subject">Subject</mat-label>
+        <input matInput id="Subject" type="text" formControlName="subject">
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label for="message">Enter your message</mat-label>
+        <textarea  matInput id="message" #message type="text" formControlName="message" style="height:200px"></textarea>
+        <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+    <mat-card-actions>
+        <button mat-raised-button type="submit" color="primary">Send</button>
+    </mat-card-actions>
+</form>
+</mat-card-content>
+</mat-card>

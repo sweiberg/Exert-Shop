@@ -120,3 +120,7 @@ code {
 .profile-card button {
     margin-bottom: 8px;
 }
+
+.disabled {
+    cursor: not-allowed;
+  }

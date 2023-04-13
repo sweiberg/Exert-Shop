@@ -4,6 +4,9 @@
         <div class="avatar"><p>{{avatar}}</p></div>
         <h1 id="profile-header" *ngIf="isProfile">Welcome back, {{user.username}}</h1>
         <h1 id="profile-header" *ngIf="isProfile == false">{{user.username}}</h1>
+        <button mat-fab color="warn" aria-label="Message this user" *ngIf="isProfile == false" (click)="sendMessage()">
+            <mat-icon>message</mat-icon>
+        </button>
         <h3 *ngIf="isProfile">User Settings</h3>
         <button mat-stroked-button *ngIf="isProfile">Update Password</button>
         <button mat-stroked-button *ngIf="isProfile">Update Email</button>

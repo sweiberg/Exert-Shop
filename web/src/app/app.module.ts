@@ -57,7 +57,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { ProfileComponent } from './profile';
-import { AuthInterceptor } from './shared/auth/auth.interceptor'
+import { AuthInterceptor } from './shared/auth/auth.interceptor';
+import { MessageSendComponent } from './message/send/send.component';
+import { MessageReadComponent } from './message/read/read.component'
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import { AuthInterceptor } from './shared/auth/auth.interceptor'
     ProductComponent,
     ProductHomeComponent,
     AddProductComponent,
-    ProfileComponent
+    ProfileComponent,
+    MessageSendComponent,
+    MessageReadComponent
   ],
   imports: [
     BrowserModule,

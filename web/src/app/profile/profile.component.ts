@@ -15,17 +15,17 @@ export class ProfileComponent implements OnInit  {
   isProfile = false;
   user: any;
   avatar: any;
+  filter = this.route.snapshot.queryParamMap.get('user')
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private profileService: ProfileService, private storageService: StorageService) {}
 
   ngOnInit() {
-    const filter = this.route.snapshot.queryParamMap.get('user');
-    console.log(filter); // Pepperoni
+    console.log(this.filter);
 
-    if (filter == this.storageService.user) {
+    if (this.filter == this.storageService.user) {
       this.isProfile = true;
     }
 
-    this.profileService.accessProfile(filter)
+    this.profileService.accessProfile(this.filter)
       .subscribe({
         next: (response) => {
           this.user = response.data;
@@ -37,5 +37,9 @@ export class ProfileComponent implements OnInit  {
           console.log(error);
         }
     });
+  }
+
+  sendMessage() {
+    this.router.navigate(['message/send'], {queryParams: { user: this.filter }});
   }
 }
