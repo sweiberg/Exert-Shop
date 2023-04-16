@@ -17,12 +17,11 @@ type Product struct {
 
 	Tags pq.StringArray `gorm:"type:text[]" json:"tags"`
 
-	OriginalPrice currency.USD `gorm:"not null" json:"originalPrice"`
-	FinalPrice    currency.USD `gorm:"default:0" json:"finalPrice"`
+	Price currency.USD `gorm:"not null" json:"price"`
 
+	Quantity   uint `gorm:"not null" json:"quantity"`
 	CategoryID uint `gorm:"not null" json:"categoryID"`
 	SellerID   uint
-	BuyerID    uint
 }
 
 func (product *Product) Create() (*Product, error) {

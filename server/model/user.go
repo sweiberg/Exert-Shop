@@ -16,8 +16,10 @@ type User struct {
 	Email    string `gorm:"size:255;not null;unique" json:"email"`
 	Password string `gorm:"size:255;not null;" json:"-"`
 
-	SentMessages     []Message `gorm:"foreignKey:SenderID"`
-	ReceivedMessages []Message `gorm:"foreignKey:ReceiverID"`
+	Purchases        []Transaction `gorm:"foreignKey:BuyerID"`
+	Sales            []Transaction `gorm:"foreignKey:SellerID"`
+	SentMessages     []Message     `gorm:"foreignKey:SenderID"`
+	ReceivedMessages []Message     `gorm:"foreignKey:ReceiverID"`
 }
 
 func (user *User) Create() (*User, error) {

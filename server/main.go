@@ -23,6 +23,7 @@ func loadDB() {
 	db.Database.AutoMigrate(&model.Product{})
 	db.Database.AutoMigrate(&model.Message{})
 	db.Database.AutoMigrate(&model.Category{})
+	db.Database.AutoMigrate(&model.Transaction{})
 }
 
 func loadEnv() {
