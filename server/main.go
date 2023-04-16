@@ -46,6 +46,7 @@ func loadRoutes() {
 	publicAPI.GET("/product/:id", controller.ViewProduct)
 	publicAPI.GET("/category/:id", controller.ViewCategory)
 	publicAPI.GET("/profile/:id", controller.ViewProfile)
+	publicAPI.GET("/product/search/:keywords", controller.SearchProduct)
 
 	protectedAPI := router.Group("/api")
 	protectedAPI.Use(middleware.VerifyJWT())
