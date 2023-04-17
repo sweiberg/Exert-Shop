@@ -15,13 +15,13 @@ type Product struct {
 	Description string `gorm:"type:text;not null" json:"description"`
 	ImageURL    string `gorm:"size:255" json:"imageURL"`
 
-	Tags pq.StringArray `gorm:"type:text[]" json:"tags"`
+	Seller *User          `json:"seller,omitempty"`
+	Tags   pq.StringArray `gorm:"type:text[]" json:"tags"`
+	Price  currency.USD   `gorm:"not null" json:"originalPrice"`
 
-	Price currency.USD `gorm:"not null" json:"price"`
-
+	SellerID   uint
 	Quantity   uint `gorm:"not null" json:"quantity"`
 	CategoryID uint `gorm:"not null" json:"categoryID"`
-	SellerID   uint
 }
 
 func (product *Product) Create() (*Product, error) {
@@ -37,7 +37,7 @@ func (product *Product) Create() (*Product, error) {
 func GetProductByID(id uint64) (Product, error) {
 	var product Product
 
-	err := db.Database.Where("id=?", id).Find(&product).Error
+	err := db.Database.Preload("Seller").Where("id=?", id).Find(&product).Error
 
 	if err != nil {
 		return Product{}, err

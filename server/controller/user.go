@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"exert-shop/helper"
 	"exert-shop/model"
 	"net/http"
 	"strconv"
@@ -26,4 +27,44 @@ func ViewProfile(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{"data": user})
+}
+
+func ViewPurchases(context *gin.Context) {
+	user, err := helper.GetThisUser(context)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	purchases, err := model.GetUserPurchases(&user)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"data": purchases})
+}
+
+func ViewSales(context *gin.Context) {
+	user, err := helper.GetThisUser(context)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	sales, err := model.GetUserSales(&user)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"data": sales})
 }

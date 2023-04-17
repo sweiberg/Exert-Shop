@@ -10,16 +10,16 @@ import (
 type Transaction struct {
 	gorm.Model
 
-	ProductID uint
-	BuyerID   uint
-	SellerID  uint
-	Quantity  uint
+	ProductID uint `gorm:"not null" json:"productID"`
+	BuyerID   uint `gorm:"not null" json:"buyerID"`
+	SellerID  uint `gorm:"not null" json:"sellerID"`
+	Quantity  uint `gorm:"not null" json:"quantity"`
 
-	Product Product
-	Buyer   User
-	Seller  User
+	Price currency.USD `gorm:"not null" json:"soldPrice"`
 
-	Price currency.USD
+	Product *Product `json:",omitempty"`
+	Buyer   *User    `json:",omitempty"`
+	Seller  *User    `json:",omitempty"`
 }
 
 func (transaction *Transaction) Create() (*Transaction, error) {
@@ -27,6 +27,18 @@ func (transaction *Transaction) Create() (*Transaction, error) {
 
 	if err != nil {
 		return &Transaction{}, err
+	}
+
+	return transaction, nil
+}
+
+func GetTransactionByID(id uint64) (Transaction, error) {
+	var transaction Transaction
+
+	err := db.Database.Preload("Buyer").Preload("Seller").Where("id=?", id).Find(&transaction).Error
+
+	if err != nil {
+		return Transaction{}, err
 	}
 
 	return transaction, nil

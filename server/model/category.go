@@ -11,7 +11,8 @@ type Category struct {
 
 	Name        string `gorm:"size:255;not null;unique" json:"name"`
 	Description string `gorm:"type:text;not null" json:"description"`
-	Products    []Product
+
+	Products []*Product `json:",omitempty"`
 }
 
 func (category *Category) Create() (*Category, error) {

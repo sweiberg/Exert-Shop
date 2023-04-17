@@ -54,7 +54,11 @@ func loadRoutes() {
 	protectedAPI.POST("/addproduct", controller.AddProduct)
 	protectedAPI.POST("/addcategory", controller.AddCategory)
 	protectedAPI.POST("/sendmessage", controller.SendMessage)
+	protectedAPI.POST("/checkout", controller.Checkout)
 	protectedAPI.GET("/message/:id", controller.ViewMessage)
+	protectedAPI.GET("/transaction/:id", controller.ViewTransaction)
+	protectedAPI.GET("/sales", controller.ViewSales)
+	protectedAPI.GET("/purchases", controller.ViewPurchases)
 
 	router.Run(":4300")
 }
