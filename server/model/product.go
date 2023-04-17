@@ -49,7 +49,7 @@ func GetProductByID(id uint64) (Product, error) {
 func GetProductsByKeywords(keywords string) ([]Product, error) {
 	var products []Product
 
-	err := db.Database.Where("to_tsvector('english', name) @@ to_tsquery(?)", keywords).Find(&products).Error
+	err := db.Database.Where("to_tsvector('english', name) @@ to_tsquery(?)", keywords).Order("created_at DESC").Find(&products).Error
 
 	if err != nil {
 		return []Product{}, err

@@ -47,7 +47,7 @@ func loadRoutes() {
 	publicAPI.GET("/product/:id", controller.ViewProduct)
 	publicAPI.GET("/category/:id", controller.ViewCategory)
 	publicAPI.GET("/profile/:id", controller.ViewProfile)
-	publicAPI.GET("/product/search/:keywords", controller.SearchProduct)
+	publicAPI.GET("/product/search/:keywords", controller.SearchProducts)
 
 	protectedAPI := router.Group("/api")
 	protectedAPI.Use(middleware.VerifyJWT())
@@ -59,6 +59,8 @@ func loadRoutes() {
 	protectedAPI.GET("/transaction/:id", controller.ViewTransaction)
 	protectedAPI.GET("/sales", controller.ViewSales)
 	protectedAPI.GET("/purchases", controller.ViewPurchases)
+	protectedAPI.GET("/message/inbox", controller.ViewInbox)
+	protectedAPI.GET("/message/sent", controller.ViewSentMessages)
 
 	router.Run(":4300")
 }

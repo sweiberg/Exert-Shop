@@ -59,7 +59,7 @@ func ViewProduct(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{"data": product})
 }
 
-func SearchProduct(context *gin.Context) {
+func SearchProducts(context *gin.Context) {
 	products, err := model.GetProductsByKeywords(helper.SanitizeURLParameter(context.Param("keywords")))
 
 	if err != nil {

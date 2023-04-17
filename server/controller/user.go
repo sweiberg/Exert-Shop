@@ -68,3 +68,43 @@ func ViewSales(context *gin.Context) {
 
 	context.JSON(http.StatusOK, gin.H{"data": sales})
 }
+
+func ViewInbox(context *gin.Context) {
+	user, err := helper.GetThisUser(context)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	messages, err := model.GetUserInbox(&user)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"data": messages})
+}
+
+func ViewSentMessages(context *gin.Context) {
+	user, err := helper.GetThisUser(context)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	messages, err := model.GetUserSentMessages(&user)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"data": messages})
+}

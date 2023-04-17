@@ -16,10 +16,8 @@ type User struct {
 	Email    string `gorm:"size:255;not null;unique" json:"email"`
 	Password string `gorm:"size:255;not null;" json:"-"`
 
-	Purchases        []*Transaction `gorm:"foreignKey:BuyerID" json:",omitempty"`
-	Sales            []*Transaction `gorm:"foreignKey:SellerID" json:",omitempty"`
-	SentMessages     []*Message     `gorm:"foreignKey:SenderID" json:",omitempty"`
-	ReceivedMessages []*Message     `gorm:"foreignKey:ReceiverID" json:",omitempty"`
+	Purchases []*Transaction `gorm:"foreignKey:BuyerID" json:",omitempty"`
+	Sales     []*Transaction `gorm:"foreignKey:SellerID" json:",omitempty"`
 }
 
 func (user *User) Create() (*User, error) {
@@ -95,4 +93,28 @@ func GetUserSales(user *User) ([]Transaction, error) {
 	}
 
 	return transactions, nil
+}
+
+func GetUserSentMessages(user *User) ([]Message, error) {
+	var messages []Message
+
+	err := db.Database.Preload("Receiver").Where("sender_id=?", user.ID).Order("created_at DESC").Find(&messages).Error
+
+	if err != nil {
+		return []Message{}, err
+	}
+
+	return messages, nil
+}
+
+func GetUserInbox(user *User) ([]Message, error) {
+	var messages []Message
+
+	err := db.Database.Preload("Sender").Where("receiver_id=?", user.ID).Order("created_at DESC").Find(&messages).Error
+
+	if err != nil {
+		return []Message{}, err
+	}
+
+	return messages, nil
 }
