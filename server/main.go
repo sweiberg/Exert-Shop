@@ -23,6 +23,7 @@ func loadDB() {
 	db.Database.AutoMigrate(&model.Product{})
 	db.Database.AutoMigrate(&model.Message{})
 	db.Database.AutoMigrate(&model.Category{})
+	db.Database.AutoMigrate(&model.Transaction{})
 }
 
 func loadEnv() {
@@ -53,7 +54,11 @@ func loadRoutes() {
 	protectedAPI.POST("/addproduct", controller.AddProduct)
 	protectedAPI.POST("/addcategory", controller.AddCategory)
 	protectedAPI.POST("/sendmessage", controller.SendMessage)
+	protectedAPI.POST("/checkout", controller.Checkout)
 	protectedAPI.GET("/message/:id", controller.ViewMessage)
+	protectedAPI.GET("/transaction/:id", controller.ViewTransaction)
+	protectedAPI.GET("/sales", controller.ViewSales)
+	protectedAPI.GET("/purchases", controller.ViewPurchases)
 
 	router.Run(":4300")
 }

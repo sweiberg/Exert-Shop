@@ -121,10 +121,9 @@ func TestAddProduct(t *testing.T) {
 		"imageURL" : "http://test.com",
 
 		"originalPrice" : 3249,
-		"finalPrice" : 8862,
+		"quantity" : 100,
 
-		"categoryID" : 1,
-		"buyerID" : 1
+		"categoryID" : 1
 	}`)
 
 	request, err := http.NewRequest("POST", "http://localhost:4300/api/addproduct", data)
@@ -157,7 +156,7 @@ func TestAddMessage(t *testing.T) {
 		"subject" : "Test Message",
 		"message" : "Hello gator nation this is an automatically generated test message.",
 
-		"parentID" : 1,
+		"parentID" : null,
 		"receiverID" : 2
 	}`)
 

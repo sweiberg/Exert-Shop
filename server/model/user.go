@@ -16,8 +16,10 @@ type User struct {
 	Email    string `gorm:"size:255;not null;unique" json:"email"`
 	Password string `gorm:"size:255;not null;" json:"-"`
 
-	SentMessages     []Message `gorm:"foreignKey:SenderID"`
-	ReceivedMessages []Message `gorm:"foreignKey:ReceiverID"`
+	Purchases        []*Transaction `gorm:"foreignKey:BuyerID" json:",omitempty"`
+	Sales            []*Transaction `gorm:"foreignKey:SellerID" json:",omitempty"`
+	SentMessages     []*Message     `gorm:"foreignKey:SenderID" json:",omitempty"`
+	ReceivedMessages []*Message     `gorm:"foreignKey:ReceiverID" json:",omitempty"`
 }
 
 func (user *User) Create() (*User, error) {
@@ -69,4 +71,28 @@ func GetUserByID(id uint64) (User, error) {
 	}
 
 	return user, nil
+}
+
+func GetUserPurchases(user *User) ([]Transaction, error) {
+	var transactions []Transaction
+
+	err := db.Database.Preload("Seller").Where("buyer_id=?", user.ID).Find(&transactions).Error
+
+	if err != nil {
+		return []Transaction{}, err
+	}
+
+	return transactions, nil
+}
+
+func GetUserSales(user *User) ([]Transaction, error) {
+	var transactions []Transaction
+
+	err := db.Database.Preload("Buyer").Where("seller_id=?", user.ID).Find(&transactions).Error
+
+	if err != nil {
+		return []Transaction{}, err
+	}
+
+	return transactions, nil
 }
