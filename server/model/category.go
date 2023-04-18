@@ -36,3 +36,29 @@ func GetCategoryByID(id uint) (Category, error) {
 
 	return category, nil
 }
+
+func GetCategoriesItems(limit int) ([]Category, error) {
+	var categories []Category
+
+	err := db.Database.Preload("Products", func(tx *gorm.DB) *gorm.DB {
+		return tx.Limit(limit)
+	}).Find(&categories).Error
+
+	if err != nil {
+		return []Category{}, err
+	}
+
+	return categories, nil
+}
+
+func GetCategories() ([]Category, error) {
+	var categories []Category
+
+	err := db.Database.Order("name ASC").Find(&categories).Error
+
+	if err != nil {
+		return []Category{}, err
+	}
+
+	return categories, nil
+}

@@ -100,7 +100,9 @@ func GetUserSales(id uint) (User, error) {
 func GetUserSentMessages(id uint) (User, error) {
 	var sent User
 
-	err := db.Database.Preload("Sent.Receiver").Where("id=?", id).Find(&sent).Error
+	err := db.Database.Preload("Sent", func(db *gorm.DB) *gorm.DB {
+		return db.Order("created_at DESC")
+	}).Preload("Sent.Receiver").Where("id=?", id).Find(&sent).Error
 
 	if err != nil {
 		return User{}, err
@@ -112,7 +114,9 @@ func GetUserSentMessages(id uint) (User, error) {
 func GetUserInbox(id uint) (User, error) {
 	var inbox User
 
-	err := db.Database.Preload("Inbox.Sender").Where("id=?", id).Find(&inbox).Error
+	err := db.Database.Preload("Inbox", func(db *gorm.DB) *gorm.DB {
+		return db.Order("created_at DESC")
+	}).Preload("Inbox.Sender").Where("id=?", id).Find(&inbox).Error
 
 	if err != nil {
 		return User{}, err
@@ -124,12 +128,12 @@ func GetUserInbox(id uint) (User, error) {
 func GetUserDashboard(id uint) (User, error) {
 	var dashboard User
 
-	err := db.Database.Preload("Purchases", func(tx *gorm.DB) *gorm.DB {
-		return tx.Limit(10)
-	}).Preload("Sales", func(tx *gorm.DB) *gorm.DB {
-		return tx.Limit(10)
-	}).Preload("Inbox", func(tx *gorm.DB) *gorm.DB {
-		return tx.Limit(10)
+	err := db.Database.Preload("Purchases", func(db *gorm.DB) *gorm.DB {
+		return db.Limit(10)
+	}).Preload("Sales", func(db *gorm.DB) *gorm.DB {
+		return db.Limit(10)
+	}).Preload("Inbox", func(db *gorm.DB) *gorm.DB {
+		return db.Limit(10)
 	}).Where("id=?", id).Find(&dashboard).Error
 
 	if err != nil {
