@@ -129,3 +129,12 @@ code {
   flex: 0 0 auto;
   justify-content: space-between;
 }
+
+#subject {
+    display: inline-flex;
+    flex: 40;
+}
+#author {
+    display: inline-flex;
+    flex: 5;
+}

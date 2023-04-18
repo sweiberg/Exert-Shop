@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class MessageSendComponent {
   isLoggedIn = false;
   sender: any;
   user: any;
-  userID = this.route.snapshot.queryParamMap.get('user');
+  @Input() userID = this.route.snapshot.queryParamMap.get('user');
 
   ngOnInit() {
     this.authService.verify()
@@ -51,8 +51,6 @@ export class MessageSendComponent {
     private route: ActivatedRoute,
     private router: Router,
     public fb: FormBuilder,
-    private http: HttpClient,
-    private _snackBar: MatSnackBar,
     private authService: AuthService,
     private profileService: ProfileService,
     private messageService: MessageService
