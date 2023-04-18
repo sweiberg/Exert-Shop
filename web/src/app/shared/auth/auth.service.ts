@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -11,8 +11,11 @@ const httpOptions = {
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
+  public isLoggedIn: boolean = false;
 
-  public isLoggedIn: boolean;
+  public isAuthenticated(): boolean {
+    return this.isLoggedIn;
+}
 
   login(username: string, password: string): Observable<any> {
     return this.http.post(

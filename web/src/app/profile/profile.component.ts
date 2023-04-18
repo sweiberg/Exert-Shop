@@ -13,14 +13,14 @@ export class ProfileComponent implements OnInit  {
 
   isLoggedIn = false;
   isProfile = false;
-  user: any;
+  user: any = {};
+  event: any;
   avatar: any;
   filter = this.route.snapshot.queryParamMap.get('user')
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private profileService: ProfileService, private storageService: StorageService) {}
 
   ngOnInit() {
-    console.log(this.filter);
-
+    
     if (this.filter == this.storageService.user) {
       this.isProfile = true;
     }
@@ -29,7 +29,6 @@ export class ProfileComponent implements OnInit  {
       .subscribe({
         next: (response) => {
           this.user = response.data;
-          console.log(response);
           this.avatar = this.user.username.charAt(0).toUpperCase();
         }, 
         error: (error) => {

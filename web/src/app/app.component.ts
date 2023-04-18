@@ -24,7 +24,7 @@ interface Search {
 })
 export class AppComponent implements OnInit{
   title: String = 'Exert Shop';
-  isLoggedIn = false;
+  //isLoggedIn = false;
   myControl = new FormControl('');
   search: Search[] = data;
 
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit{
   showCart: boolean = false;
   cartItems: Product[];
   productInfo: ProductService;
-  constructor(private router: Router, private authService: AuthService, private storageService: StorageService, public productService: ProductService) {
+  constructor(private router: Router, public authService: AuthService, private storageService: StorageService, public productService: ProductService) {
     this.productInfo = {} as ProductService;
   }
 
@@ -48,11 +48,11 @@ export class AppComponent implements OnInit{
     this.authService.verify()
     .subscribe({
       next: (response) => {
-        this.isLoggedIn = true;
+        this.authService.isLoggedIn = true;
         this.user = response;
       },
       error: (error) => {
-        this.isLoggedIn = false;
+        this.authService.isLoggedIn = false;
       }
     });
 
@@ -64,7 +64,6 @@ export class AppComponent implements OnInit{
     this.cartLength = cart.length;
     this.recheckIfInMenu = false;
   }
-
 
   async getCart() {
     let cartStorage = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -141,7 +140,6 @@ export class AppComponent implements OnInit{
     this.cartLength = cart.length;
     console.log("Cart Length Updated");
   }
-
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
