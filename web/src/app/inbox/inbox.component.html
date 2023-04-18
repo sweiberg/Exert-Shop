@@ -1,0 +1,39 @@
+<button mat-button (click)="openInbox()" [disabled]="isInbox">Inbox</button>
+<button mat-button (click)="openSent()" [disabled]="!isInbox">Sent Messages</button>
+<br /><mat-divider></mat-divider><br />
+<mat-accordion *ngIf="isInbox">
+  <mat-expansion-panel *ngFor="let message of inboxList">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <div id="date"><mat-icon fontIcon="calendar_today"></mat-icon>&nbsp;{{ message.date | date }}&nbsp;</div>
+        <div id="author"><mat-icon fontIcon="account_box"></mat-icon>&nbsp;From:&nbsp;<a href="/profile?user={{message.senderID}}">{{ message.userName }}</a></div>
+        <div id="subject"><mat-icon fontIcon="subject"></mat-icon>&nbsp;Subject: {{ message.subject }}</div>
+      </mat-panel-title>
+      <mat-panel-description>
+          <button mat-button  (click)="openReply(message.senderID, $event)" align="end">Respond</button>
+          <button mat-button align="end">Delete</button>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-divider></mat-divider>
+    <br />
+    <p>{{ message.body }}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<mat-accordion *ngIf="isInbox == false">
+  <mat-expansion-panel *ngFor="let message of sentList">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <div id="date"><mat-icon fontIcon="calendar_today"></mat-icon>&nbsp;{{ message.date | date }}&nbsp;</div>
+        <div id="author"><mat-icon fontIcon="account_box"></mat-icon>&nbsp;To:&nbsp;<a href="/profile?user={{message.recipientID}}">{{ message.userName }}</a></div>
+        <div id="subject"><mat-icon fontIcon="subject"></mat-icon>&nbsp;Subject: {{ message.subject }}</div>
+      </mat-panel-title>
+      <mat-panel-description>
+          <button mat-button align="end">Delete</button>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-divider></mat-divider>
+    <br />
+    <p>{{ message.body }}</p>
+  </mat-expansion-panel>
+</mat-accordion>

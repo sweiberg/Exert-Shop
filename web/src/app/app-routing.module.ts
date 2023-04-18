@@ -6,8 +6,9 @@ import { RegisterComponent } from './register';
 import {ProductHomeComponent} from './product_home';
 import {AddProductComponent} from './admin/add_product';
 import { ProfileComponent } from './profile';
-import { MessageSendComponent } from './message/send';
-import { MessageReadComponent } from './message/read';
+import { MessageSendComponent } from './inbox/send';
+import { MessageReadComponent } from './inbox/read';
+import { MessageInboxComponent } from './inbox';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,8 +17,9 @@ const routes: Routes = [
   { path : 'sample_product', component: ProductHomeComponent},
   { path : 'admin/add_product', component: AddProductComponent},
   { path : 'profile', component: ProfileComponent},
-  { path : 'message/send', component: MessageSendComponent},
-  { path : 'message/read', component: MessageReadComponent},
+  { path : 'inbox/send', component: MessageSendComponent},
+  { path : 'inbox/read', component: MessageReadComponent},
+  { path : 'inbox', component: MessageInboxComponent},
   { path: '**', redirectTo: '' }
 ];
 

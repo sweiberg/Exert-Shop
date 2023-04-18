@@ -31,7 +31,7 @@
 
           <!-- <div class ="flex-spacer"></div> -->
           <button mat-icon-button [matMenuTriggerFor]="user"><mat-icon aria-label="User Profile">account_circle</mat-icon></button>
-          <button mat-icon-button><mat-icon aria-label="View Lists">view_list</mat-icon></button>
+          <button mat-icon-button (click)=openInbox() *ngIf="authService.isLoggedIn"><mat-icon aria-label="View Lists">view_list</mat-icon></button>
           <ng-container><button (click)=openCart() mat-icon-button><mat-icon matBadge={{cartLength}} aria-label="Shopping Cart">shopping_cart</mat-icon></button>
           </ng-container>
 
@@ -68,11 +68,11 @@
 
   <mat-menu #user="matMenu">
     <!-- If Logged In-->
-    <button mat-menu-item *ngIf="isLoggedIn == true" (click)="Profile()">Profile</button>
-    <button mat-menu-item *ngIf="isLoggedIn == true" (click)="Logout()">Logout</button>
+    <button mat-menu-item *ngIf="authService.isLoggedIn" (click)="Profile()">Profile</button>
+    <button mat-menu-item *ngIf="authService.isLoggedIn" (click)="Logout()">Logout</button>
     <!-- If Logged Out-->
-    <button mat-menu-item *ngIf="isLoggedIn == false" (click)="Login()">User Login</button>
-    <button mat-menu-item *ngIf="isLoggedIn == false" (click)="Register()">Registration</button>
+    <button mat-menu-item *ngIf="!authService.isLoggedIn" (click)="Login()">User Login</button>
+    <button mat-menu-item *ngIf="!authService.isLoggedIn" (click)="Register()">Registration</button>
   </mat-menu>
 
   <mat-menu #electronics="matMenu">
