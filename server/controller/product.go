@@ -48,7 +48,7 @@ func ViewProduct(context *gin.Context) {
 		return
 	}
 
-	product, err := model.GetProductByID(id)
+	product, err := model.GetProductByID(uint(id))
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

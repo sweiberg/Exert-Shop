@@ -37,7 +37,7 @@ func (product *Product) Create() (*Product, error) {
 	return product, nil
 }
 
-func GetProductByID(id uint64) (Product, error) {
+func GetProductByID(id uint) (Product, error) {
 	var product Product
 
 	err := db.Database.Preload("Seller").Preload("Category").Where("id=?", id).Find(&product).Error

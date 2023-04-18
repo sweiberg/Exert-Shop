@@ -7,18 +7,28 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-func GetThisUser(context *gin.Context) (model.User, error) {
+func GetThisUserID(context *gin.Context) (uint, error) {
 	err := VerifyHeaderJWT(context)
+
+	if err != nil {
+		return 0, err
+	}
+
+	token, _ := GetHeaderJWT(context)
+	claims, _ := token.Claims.(jwt.MapClaims)
+	id := uint(claims["id"].(float64))
+
+	return id, nil
+}
+
+func GetThisUser(context *gin.Context) (model.User, error) {
+	id, err := GetThisUserID(context)
 
 	if err != nil {
 		return model.User{}, err
 	}
 
-	token, _ := GetHeaderJWT(context)
-	claims, _ := token.Claims.(jwt.MapClaims)
-	uid := uint64(claims["id"].(float64))
-
-	user, err := model.GetUserByID(uid)
+	user, err := model.GetUserByID(id)
 
 	if err != nil {
 		return model.User{}, err
