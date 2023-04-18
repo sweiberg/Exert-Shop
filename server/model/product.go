@@ -15,9 +15,12 @@ type Product struct {
 	Description string `gorm:"type:text;not null" json:"description"`
 	ImageURL    string `gorm:"size:255" json:"imageURL"`
 
-	Seller *User          `json:"seller,omitempty"`
-	Tags   pq.StringArray `gorm:"type:text[]" json:"tags"`
-	Price  currency.USD   `gorm:"not null" json:"originalPrice"`
+	Seller   *User     `json:"seller,omitempty"`
+	Category *Category `json:"category,omitempty"`
+
+	Tags          pq.StringArray `gorm:"type:text[]" json:"tags"`
+	OriginalPrice currency.USD   `gorm:"not null" json:"originalPrice"`
+	FinalPrice    currency.USD   `gorm:"default:0" json:"finalPrice"`
 
 	SellerID   uint
 	Quantity   uint `gorm:"not null" json:"quantity"`
@@ -37,7 +40,7 @@ func (product *Product) Create() (*Product, error) {
 func GetProductByID(id uint64) (Product, error) {
 	var product Product
 
-	err := db.Database.Preload("Seller").Where("id=?", id).Find(&product).Error
+	err := db.Database.Preload("Seller").Preload("Category").Where("id=?", id).Find(&product).Error
 
 	if err != nil {
 		return Product{}, err
