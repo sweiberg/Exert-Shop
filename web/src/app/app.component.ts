@@ -6,7 +6,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { AuthService } from './shared/auth/auth.service'
 import { Router } from '@angular/router';
 import { StorageService } from './shared/auth/storage.service';
-import data from 'src/app/searchdata.json';
+import data from './searchdata.json';
 import {Product} from "./schema/product.schema";
 import {ProductService} from "./shared/product/product.service";
 
@@ -113,6 +113,10 @@ export class AppComponent implements OnInit{
         this.trigger.closeMenu();
       }
     }, 175);
+  }
+
+  openInbox() {
+    this.router.navigate(['/inbox'], {queryParams: {user: this.user.data}});
   }
 
   Profile() {

@@ -8,6 +8,7 @@
             <mat-icon>message</mat-icon>
         </button>
         <h3 *ngIf="isProfile">User Settings</h3>
+        <button mat-stroked-button (click)="openInbox()" *ngIf="isProfile">Message Inbox</button>
         <button mat-stroked-button *ngIf="isProfile">Update Password</button>
         <button mat-stroked-button *ngIf="isProfile">Update Email</button>
         <button mat-stroked-button *ngIf="isProfile">Contact Support</button>

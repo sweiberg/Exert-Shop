@@ -123,4 +123,9 @@ code {
 
 .disabled {
     cursor: not-allowed;
-  }
+}
+
+.mat-content > mat-panel-description {
+  flex: 0 0 auto;
+  justify-content: space-between;
+}

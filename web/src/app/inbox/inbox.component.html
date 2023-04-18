@@ -1,0 +1,16 @@
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let message of inboxList">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ message.subject }}
+        </mat-panel-title>
+        <mat-panel-description>
+            <button mat-button align="end">Respond</button>
+            <button mat-button align="end">Delete</button>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-divider></mat-divider>
+      <br />
+      <p>{{ message.body }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>

@@ -39,7 +39,11 @@ export class ProfileComponent implements OnInit  {
     });
   }
 
+  openInbox() {
+    this.router.navigate(['/inbox'], {queryParams: {user: this.filter}});
+  }
+
   sendMessage() {
-    this.router.navigate(['message/send'], {queryParams: { user: this.filter }});
+    this.router.navigate(['inbox/send'], {queryParams: { user: this.filter }});
   }
 }

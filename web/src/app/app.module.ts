@@ -58,8 +58,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { ProfileComponent } from './profile';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
-import { MessageSendComponent } from './message/send/send.component';
-import { MessageReadComponent } from './message/read/read.component'
+import { MessageSendComponent } from './inbox/send/send.component';
+import { MessageReadComponent } from './inbox/read/read.component';
+import { MessageInboxComponent } from './inbox/inbox.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { MessageReadComponent } from './message/read/read.component'
     AddProductComponent,
     ProfileComponent,
     MessageSendComponent,
-    MessageReadComponent
+    MessageReadComponent,
+    MessageInboxComponent
   ],
   imports: [
     BrowserModule,
