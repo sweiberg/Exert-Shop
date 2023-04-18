@@ -37,7 +37,7 @@ func ViewCategory(context *gin.Context) {
 		return
 	}
 
-	category, err := model.GetCategoryByID(id)
+	category, err := model.GetCategoryByID(uint(id))
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

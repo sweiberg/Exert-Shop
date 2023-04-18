@@ -61,6 +61,7 @@ func loadRoutes() {
 	protectedAPI.GET("/purchases", controller.ViewPurchases)
 	protectedAPI.GET("/message/inbox", controller.ViewInbox)
 	protectedAPI.GET("/message/sent", controller.ViewSentMessages)
+	protectedAPI.GET("/dashboard", controller.ViewDashboard)
 
 	router.Run(":4300")
 }

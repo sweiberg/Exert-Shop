@@ -18,7 +18,7 @@ func ViewProfile(context *gin.Context) {
 		return
 	}
 
-	user, err := model.GetUserByID(id)
+	user, err := model.GetUserByID(uint(id))
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -30,7 +30,7 @@ func ViewProfile(context *gin.Context) {
 }
 
 func ViewPurchases(context *gin.Context) {
-	user, err := helper.GetThisUser(context)
+	id, err := helper.GetThisUserID(context)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -38,7 +38,7 @@ func ViewPurchases(context *gin.Context) {
 		return
 	}
 
-	purchases, err := model.GetUserPurchases(&user)
+	purchases, err := model.GetUserPurchases(id)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -50,7 +50,7 @@ func ViewPurchases(context *gin.Context) {
 }
 
 func ViewSales(context *gin.Context) {
-	user, err := helper.GetThisUser(context)
+	id, err := helper.GetThisUserID(context)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -58,7 +58,7 @@ func ViewSales(context *gin.Context) {
 		return
 	}
 
-	sales, err := model.GetUserSales(&user)
+	sales, err := model.GetUserSales(id)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -70,7 +70,7 @@ func ViewSales(context *gin.Context) {
 }
 
 func ViewInbox(context *gin.Context) {
-	user, err := helper.GetThisUser(context)
+	id, err := helper.GetThisUserID(context)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -78,7 +78,7 @@ func ViewInbox(context *gin.Context) {
 		return
 	}
 
-	messages, err := model.GetUserInbox(&user)
+	messages, err := model.GetUserInbox(id)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -90,7 +90,7 @@ func ViewInbox(context *gin.Context) {
 }
 
 func ViewSentMessages(context *gin.Context) {
-	user, err := helper.GetThisUser(context)
+	id, err := helper.GetThisUserID(context)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -98,7 +98,7 @@ func ViewSentMessages(context *gin.Context) {
 		return
 	}
 
-	messages, err := model.GetUserSentMessages(&user)
+	messages, err := model.GetUserSentMessages(id)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -107,4 +107,24 @@ func ViewSentMessages(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{"data": messages})
+}
+
+func ViewDashboard(context *gin.Context) {
+	id, err := helper.GetThisUserID(context)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	dashboard, err := model.GetUserDashboard(id)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"data": dashboard})
 }

@@ -18,7 +18,7 @@ func SendMessage(context *gin.Context) {
 		return
 	}
 
-	user, err := helper.GetThisUser(context)
+	id, err := helper.GetThisUserID(context)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -26,7 +26,7 @@ func SendMessage(context *gin.Context) {
 		return
 	}
 
-	input.SenderID = user.ID
+	input.SenderID = id
 
 	newMessage, err := input.Create()
 
@@ -48,7 +48,7 @@ func ViewMessage(context *gin.Context) {
 		return
 	}
 
-	message, err := model.GetMessageByID(id)
+	userID, err := helper.GetThisUserID(context)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -56,7 +56,7 @@ func ViewMessage(context *gin.Context) {
 		return
 	}
 
-	user, err := helper.GetThisUser(context)
+	message, err := model.GetMessageByID(uint(id))
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -64,7 +64,7 @@ func ViewMessage(context *gin.Context) {
 		return
 	}
 
-	if message.SenderID != user.ID && message.ReceiverID != user.ID {
+	if message.SenderID != userID && message.ReceiverID != userID {
 		context.JSON(http.StatusForbidden, gin.H{"error": err.Error()})
 
 		return

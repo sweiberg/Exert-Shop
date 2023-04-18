@@ -22,7 +22,7 @@ func ViewTransaction(context *gin.Context) {
 		return
 	}
 
-	transaction, err := model.GetTransactionByID(id)
+	transaction, err := model.GetTransactionByID(uint(id))
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -30,7 +30,7 @@ func ViewTransaction(context *gin.Context) {
 		return
 	}
 
-	user, err := helper.GetThisUser(context)
+	userID, err := helper.GetThisUserID(context)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -38,7 +38,7 @@ func ViewTransaction(context *gin.Context) {
 		return
 	}
 
-	if transaction.BuyerID != user.ID && transaction.SellerID != user.ID {
+	if transaction.BuyerID != userID && transaction.SellerID != userID {
 		context.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 
 		return
