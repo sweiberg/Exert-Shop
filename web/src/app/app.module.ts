@@ -63,6 +63,7 @@ import { MessageReadComponent } from './inbox/read/read.component';
 import { MessageInboxComponent } from './inbox/inbox.component';
 import { SearchComponent } from './globals/search-box/search/search.component';
 import { CheckoutFormComponent } from './globals/checkout-form/checkout-form.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { CheckoutFormComponent } from './globals/checkout-form/checkout-form.com
     MessageInboxComponent,
     SearchComponent,
     CheckoutFormComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,

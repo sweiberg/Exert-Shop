@@ -135,9 +135,11 @@ export class AppComponent implements OnInit{
     }
     let dialogRef = this.dialog.open(CheckoutFormComponent, {
       disableClose: false,
-      width:'80%',
+      width:'50%',
       height: '90%',
     });
+    //inject cart items
+    dialogRef.componentInstance.data = this.cartItems;
   }
 
   openResourceMenu() {

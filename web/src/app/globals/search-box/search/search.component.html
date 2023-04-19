@@ -1,6 +1,7 @@
  <mat-grid-list cols="4" rowHeight="1:2">
     <ng-container>
       <div *ngFor="let item of data"><product [product]=item></product></div>
+      <div class="center" *ngIf="data.length === 0"><h2>No Items found :(</h2></div>
     </ng-container>
   </mat-grid-list>
 

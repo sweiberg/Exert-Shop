@@ -1,52 +1,72 @@
-<mat-grid-list cols="2" rowHeight="60px">
-  <mat-grid-tile>
+<div class="form-container">
+<form [formGroup]="form">
+  <a>  *THIS DEVELOPMENT TEST, NO REAL PAYMENT WILL BE MADE* </a>
+  <div>
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" />
     </mat-form-field>
+  </div>
 
+  <div>
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input matInput formControlName="email" />
     </mat-form-field>
+  </div>
 
+  <div>
     <mat-form-field>
       <mat-label>Address</mat-label>
       <input matInput formControlName="address" />
     </mat-form-field>
+  </div>
 
+  <div>
     <mat-form-field>
       <mat-label>City</mat-label>
       <input matInput formControlName="city" />
     </mat-form-field>
+  </div>
 
+  <div>
     <mat-form-field>
       <mat-label>State</mat-label>
       <input matInput formControlName="state" />
     </mat-form-field>
+  </div>
 
+  <div>
     <mat-form-field>
       <mat-label>Zip</mat-label>
       <input matInput formControlName="zip" />
     </mat-form-field>
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile>
+  <div>
     <mat-form-field>
       <mat-label>Credit Card Number</mat-label>
       <input matInput formControlName="creditCard" />
     </mat-form-field>
+  </div>
 
+  <div>
     <mat-form-field>
       <mat-label>Expiration Date</mat-label>
       <input matInput formControlName="expiration" />
     </mat-form-field>
+  </div>
 
+  <div>
     <mat-form-field>
       <mat-label>CVV</mat-label>
       <input matInput formControlName="cvv" />
     </mat-form-field>
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
+  <button mat-raised-button color="primary">Submit</button>
+</form>
+  <app-sidebar [productData]="data">
+    HELLO
+  </app-sidebar>
+</div>
 
-<button mat-raised-button color="primary">Submit</button>
