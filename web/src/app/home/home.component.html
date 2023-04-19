@@ -1,2 +1,22 @@
-<main class="container">
-</main>
+<div *ngFor="let category of catList">
+    <h1 id="category-name">{{ category.name }}</h1>
+    <mat-divider></mat-divider>
+    <div id="category-list" >
+        <div id="product-list" class="product-card" *ngFor="let product of category.products">
+            <div *ngIf="product.tag!=''" class="badge" >{{product.tag}}</div>
+            <div class="product-holder">
+              <img src="{{product.imgURL}}" alt="">
+            </div>
+            <div class="product-details">
+              <h4><a href="">{{product.name}}</a></h4>
+              <div class="product-bottom-details">
+                <div *ngIf="product.finalPrice!=0 && product.finalPrice<product.originalPrice " class="product-price"><small>${{product.originalPrice}}.00</small>${{product.finalPrice}}.00</div>
+                <div *ngIf="product.finalPrice==0 || product.finalPrice>=product.originalPrice" class="product-price">${{product.originalPrice}}.00</div>
+                <div class="product-links">
+                  <a></a>
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>

@@ -12,7 +12,7 @@ import { MessageService } from '../../shared/message/message.service';
   templateUrl: './send.component.html',
   styleUrls: ['./send.component.css']
 })
-export class MessageSendComponent {
+export class MessageSendComponent implements OnInit {
   form: FormGroup;
   isLoggedIn = false;
   sender: any;

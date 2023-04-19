@@ -76,7 +76,7 @@ export class AppComponent implements OnInit{
           let imgURL = data.imageURL;
           let tag = data.tags;
           if (response.status == 200) {
-            let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, tag, imgURL, data.description,);
+            let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, data.categoryID, tag, imgURL, data.description,);
             product.id = data.ID;
             this.cartItems.push(product);
           }

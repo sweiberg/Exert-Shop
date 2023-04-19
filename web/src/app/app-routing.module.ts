@@ -5,6 +5,7 @@ import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import {ProductHomeComponent} from './product_home';
 import {AddProductComponent} from './admin/add_product';
+import { AddCategoryComponent } from './admin/add_category';
 import { ProfileComponent } from './profile';
 import { MessageSendComponent } from './inbox/send';
 import { MessageReadComponent } from './inbox/read';
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path : 'sample_product', component: ProductHomeComponent},
   { path : 'admin/add_product', component: AddProductComponent},
+  { path : 'admin/add_category', component: AddCategoryComponent},
   { path : 'profile', component: ProfileComponent},
   { path : 'inbox/send', component: MessageSendComponent},
   { path : 'inbox/read', component: MessageReadComponent},

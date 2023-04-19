@@ -61,6 +61,7 @@ import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { MessageSendComponent } from './inbox/send/send.component';
 import { MessageReadComponent } from './inbox/read/read.component';
 import { MessageInboxComponent } from './inbox/inbox.component';
+import { AddCategoryComponent } from './admin/add_category/add.category.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { MessageInboxComponent } from './inbox/inbox.component';
     ProfileComponent,
     MessageSendComponent,
     MessageReadComponent,
-    MessageInboxComponent
+    MessageInboxComponent,
+    AddCategoryComponent,
   ],
   imports: [
     BrowserModule,
