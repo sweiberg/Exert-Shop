@@ -59,7 +59,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { ProfileComponent } from './profile';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { MessageSendComponent } from './message/send/send.component';
-import { MessageReadComponent } from './message/read/read.component'
+import { MessageReadComponent } from './message/read/read.component';
+import { SearchComponent } from './globals/search-box/search/search.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { MessageReadComponent } from './message/read/read.component'
     AddProductComponent,
     ProfileComponent,
     MessageSendComponent,
-    MessageReadComponent
+    MessageReadComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -123,13 +125,14 @@ import { MessageReadComponent } from './message/read/read.component'
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    MatDialogModule,
     OverlayModule,
     PortalModule,
     ScrollingModule,
     FontAwesomeModule,
     HttpClientModule,
   ],
-  providers: [{    
+  providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true

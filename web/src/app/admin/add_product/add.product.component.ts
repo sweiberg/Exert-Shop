@@ -89,6 +89,10 @@ export class AddProductComponent {
     return JSON.stringify(updatedForm);
   }
 
+  GetProduct(){
+
+  }
+
   onSubmit(){
     let form = this.constructAndTrimJSON();
     console.log(form)
