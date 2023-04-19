@@ -62,6 +62,7 @@ import { MessageSendComponent } from './inbox/send/send.component';
 import { MessageReadComponent } from './inbox/read/read.component';
 import { MessageInboxComponent } from './inbox/inbox.component';
 import { AddCategoryComponent } from './admin/add_category/add.category.component';
+import { TestComponent } from './admin/test/test.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { AddCategoryComponent } from './admin/add_category/add.category.componen
     MessageReadComponent,
     MessageInboxComponent,
     AddCategoryComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,

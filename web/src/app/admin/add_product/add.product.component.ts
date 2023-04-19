@@ -5,15 +5,17 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ProductService } from '../../shared/product/product.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddCategoryComponent } from '../add_category'
 
-@Component({templateUrl: 'add.product.html'})
+@Component({templateUrl: 'add.product.html', styleUrls: ['./add.product.css']} )
 export class AddProductComponent implements OnInit {
   title: string;
   form: FormGroup;
   catList: Category[];
   selectedValue: number;
 
-  constructor( private router:Router, public fb: FormBuilder, private http: HttpClient, private productService: ProductService) {
+  constructor( private router:Router, public fb: FormBuilder, private http: HttpClient, private productService: ProductService, public dialog: MatDialog) {
     this.form = this.fb.group({
       name: new FormControl('', []),
       originalPrice: new FormControl('', []),
@@ -83,23 +85,7 @@ export class AddProductComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.catList = new Array();
-
-      this.productService.getCategories()    
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-          for (let i = 0; i < response.data.length; i++) {
-            const id = response.data[i].ID;
-            const name = response.data[i].name;
-            const catItem = new Category(id, name);
-            this.catList.push(catItem);
-          }
-        }, 
-        error: (error) => {
-          console.log(error);
-        }
-      });
+    this.onGetCat();
   }
 
   changeCategory() {
@@ -120,6 +106,34 @@ export class AddProductComponent implements OnInit {
     return JSON.stringify(updatedForm);
   }
 
+  onGetCat() {
+    this.catList = new Array();
+
+    this.productService.getCategories()    
+    .subscribe({
+      next: (response) => {
+        //console.log(response);
+        for (let i = 0; i < response.data.length; i++) {
+          const id = response.data[i].ID;
+          const name = response.data[i].name;
+          const catItem = new Category(id, name);
+          this.catList.push(catItem);
+        }
+      }, 
+      error: (error) => {
+        console.log(error);
+      }
+    });
+
+    console.log(this.catList);
+  }
+
+  onAddCat() {
+      let dialogRef = this.dialog.open(AddCategoryComponent);
+      this.onGetCat();
+      console.log(JSON.stringify(this.catList));
+  }
+
   onSubmit(){
     let form = this.constructAndTrimJSON();
     console.log(form)
@@ -128,7 +142,7 @@ export class AddProductComponent implements OnInit {
     })
       .subscribe({
         next: (response) => {
-          console.log(response)
+          //console.log(response)
           //switch to form reset later
           this.finalPrice.setValue(this.defaultInfo.finalPrice.toString());
           this.originalPrice.setValue(this.defaultInfo.originalPrice.toString());

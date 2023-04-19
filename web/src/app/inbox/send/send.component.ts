@@ -73,6 +73,7 @@ export class MessageSendComponent implements OnInit {
     .subscribe({
         next: (response) => {
           console.log(response);
+          location.reload();
         },
         error: (error) => {
           console.log(error);

@@ -17,26 +17,28 @@ export class HomeComponent implements OnInit {
         this.productService.getSample().subscribe({
             next: (response) => {
                 console.log(response.data);
-                for (let i = 0; i < response.data.length; i++) {
+                for (let categories of response.data) {
                     this.prodList = new Array();
-                    for (let j = 0; j < response.data[i].Products.length; j++) {
-                        const prodName = response.data[i].Products[j].name;
-                        const finalPrice = response.data[i].Products[j].finalPrice;
-                        const originalPrice = response.data[i].Products[j].originalPrice;
-                        const category = response.data[i].name;
-                        const categoryID = response.data[i].Products[j].categoryID;
-                        const tags = response.data[i].Products[j].tags;
-                        const imgURL = response.data[i].Products[j].imgURL;
-                        const prodDesc = response.data[i].Products[j].description;
-                        const prodItem = new Product(prodName, finalPrice, originalPrice, category, tags, imgURL, prodDesc, categoryID);
-                        this.prodList.push(prodItem);
-                    }
-                    const catID = response.data[i].ID;
-                    const catName = response.data[i].name;
-                    const catDesc = response.data[i].description;
+                    if (categories.Products) {
+                        for (let products of categories.Products) {
+                            const prodName = products.name;
+                            const finalPrice = products.finalPrice;
+                            const originalPrice = products.originalPrice;
+                            const category = categories.name;
+                            const categoryID = products.categoryID;
+                            const tags = products.tags;
+                            const imageURL = products.imageURL;
+                            const prodDesc = products.description;
+                            const prodItem = new Product(prodName, finalPrice, originalPrice, category, tags, imageURL, prodDesc, categoryID);
+                            this.prodList.push(prodItem);
+                        }
+                    const catID = categories.ID;
+                    const catName = categories.name;
+                    const catDesc = categories.description;
                     const catItem = new Category(catID, catName, catDesc, this.prodList);
                     this.catList.push(catItem);
                     console.log(this.catList);
+                    }
                 }
             },
             error: (error) => {

@@ -27,6 +27,7 @@
               <input matInput placeholder="Description" [formControl]="description">
             </mat-form-field>
             <br>
+            <div id="add-cat">
             <mat-form-field appearance="fill">
               <mat-label>Category</mat-label>
               <mat-select [(ngModel)]="selectedValue" name="catList" (ngModelChange)="changeCategory()">
@@ -35,6 +36,8 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="onAddCat()">+</button>
+          </div>
             <br>
             <p>Add Sale tag to define sale price</p>
             <mat-form-field>

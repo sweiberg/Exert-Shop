@@ -43,18 +43,14 @@ a
   padding: 3px 10px;
 }
 
-img:hover {
-  transform: scale(1.5) rotate(50deg);
-  transition: 0.5s;
-}
-
 .product-holder {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 150px;
-  padding: 50px;
+  padding: 5px;
   background: #b5b1b1;
+  overflow: hidden;
 }
 
 .product-holder img {
@@ -152,4 +148,9 @@ img:hover {
 h1#category-name {
   color: #fff;
   margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+mat-divider {
+  border-top-width: 4px;
 }

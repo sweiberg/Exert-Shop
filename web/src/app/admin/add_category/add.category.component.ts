@@ -9,6 +9,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class AddCategoryComponent {
   form: FormGroup;
+  public canClose: boolean = false;
   constructor(private productService: ProductService, public fb: FormBuilder) {
     this.form = this.fb.group({
       name: new FormControl('', [Validators.required]),
@@ -23,10 +24,13 @@ export class AddCategoryComponent {
     this.productService.addCategory(name, description).subscribe({
       next: (response) => {
         console.log(response);
+        this.canClose = true;
+        location.reload();
       },
       error: (error) => {
         console.log(error);
+        this.canClose = false;
       }
-  });;
+    });
   }
 }

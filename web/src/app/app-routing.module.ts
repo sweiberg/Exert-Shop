@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile';
 import { MessageSendComponent } from './inbox/send';
 import { MessageReadComponent } from './inbox/read';
 import { MessageInboxComponent } from './inbox';
+import { TestComponent } from './admin/test';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path : 'inbox/send', component: MessageSendComponent},
   { path : 'inbox/read', component: MessageReadComponent},
   { path : 'inbox', component: MessageInboxComponent},
+  { path : 'admin/test', component: TestComponent},
   { path: '**', redirectTo: '' }
 ];
 
