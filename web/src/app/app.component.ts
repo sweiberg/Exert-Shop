@@ -11,6 +11,7 @@ import {Product} from "./schema/product.schema";
 import {ProductService} from "./shared/product/product.service";
 import {MatDialog} from "@angular/material/dialog";
 import {SearchComponent} from "./globals/search-box/search/search.component";
+import {CheckoutFormComponent} from "./globals/checkout-form/checkout-form.component";
 
 interface Search {
   title: string;
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit{
   showCart: boolean = false;
   cartItems: Product[];
   productInfo: ProductService;
-  constructor(public dialog: MatDialog, private router: Router, private authService: AuthService, private storageService: StorageService, public productService: ProductService) {
+  constructor(public dialog: MatDialog, private router: Router, public authService: AuthService, private storageService: StorageService, public productService: ProductService) {
     this.productInfo = {} as ProductService;
   }
 
@@ -125,6 +126,20 @@ export class AppComponent implements OnInit{
     this.getCart();
   }
 
+  Checkout(){
+    //check if cart is empty
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    if(cart.length == 0){
+      alert("Cart is empty, cannot checkout");
+      return;
+    }
+    let dialogRef = this.dialog.open(CheckoutFormComponent, {
+      disableClose: false,
+      width:'80%',
+      height: '90%',
+    });
+  }
+
   openResourceMenu() {
     this.trigger.openMenu();
   }
@@ -162,10 +177,5 @@ export class AppComponent implements OnInit{
     let cart = JSON.parse(localStorage.getItem('productIDList') || '[]');
     this.cartLength = cart.length;
     console.log("Cart Length Updated");
-  }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
  }

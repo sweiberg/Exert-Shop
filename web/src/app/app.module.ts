@@ -62,6 +62,7 @@ import { MessageSendComponent } from './inbox/send/send.component';
 import { MessageReadComponent } from './inbox/read/read.component';
 import { MessageInboxComponent } from './inbox/inbox.component';
 import { SearchComponent } from './globals/search-box/search/search.component';
+import { CheckoutFormComponent } from './globals/checkout-form/checkout-form.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { SearchComponent } from './globals/search-box/search/search.component';
     MessageReadComponent,
     MessageInboxComponent,
     SearchComponent,
+    CheckoutFormComponent,
   ],
   imports: [
     BrowserModule,
