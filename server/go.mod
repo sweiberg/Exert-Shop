@@ -7,6 +7,7 @@ require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.10.7
+	github.com/stripe/stripe-go v70.15.0+incompatible
 	golang.org/x/crypto v0.4.0
 	gorm.io/driver/postgres v1.4.6
 	gorm.io/gorm v1.24.3

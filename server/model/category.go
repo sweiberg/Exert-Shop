@@ -40,9 +40,7 @@ func GetCategoryByID(id uint) (Category, error) {
 func GetCategoriesItems(limit int) ([]Category, error) {
 	var categories []Category
 
-	err := db.Database.Preload("Products", func(tx *gorm.DB) *gorm.DB {
-		return tx.Limit(limit)
-	}).Find(&categories).Error
+	err := db.Database.Preload("Products").Find(&categories).Error
 
 	if err != nil {
 		return []Category{}, err
