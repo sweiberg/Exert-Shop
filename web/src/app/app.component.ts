@@ -6,7 +6,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { AuthService } from './shared/auth/auth.service'
 import { Router } from '@angular/router';
 import { StorageService } from './shared/auth/storage.service';
-import data from 'src/app/searchdata.json';
+import data from './searchdata.json';
 import {Product} from "./schema/product.schema";
 import {ProductService} from "./shared/product/product.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -26,7 +26,7 @@ interface Search {
 })
 export class AppComponent implements OnInit{
   title: String = 'Exert Shop';
-  isLoggedIn = false;
+  //isLoggedIn = false;
   myControl = new FormControl('');
   search: Search[] = data;
 
@@ -48,18 +48,17 @@ export class AppComponent implements OnInit{
     this.authService.verify()
     .subscribe({
       next: (response) => {
-        this.isLoggedIn = true;
+        this.authService.isLoggedIn = true;
         this.user = response;
       },
       error: (error) => {
-        this.isLoggedIn = false;
+        this.authService.isLoggedIn = false;
       }
     });
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
     this.cartLength = cart.length;
     this.recheckIfInMenu = false;
   }
-
 
   async getCart() {
     let cartStorage = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -138,6 +137,10 @@ export class AppComponent implements OnInit{
     }, 175);
   }
 
+  openInbox() {
+    this.router.navigate(['/inbox'], {queryParams: {user: this.user.data}});
+  }
+
   Profile() {
     this.router.navigate(['/profile'], {queryParams: {user: this.user.data}});
   }
@@ -159,5 +162,10 @@ export class AppComponent implements OnInit{
     let cart = JSON.parse(localStorage.getItem('productIDList') || '[]');
     this.cartLength = cart.length;
     console.log("Cart Length Updated");
+  }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
  }

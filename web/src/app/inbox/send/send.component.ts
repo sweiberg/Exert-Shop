@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from '../../shared/auth/auth.service'
-import { ProfileService } from '../../shared/user/profile.service'
+import { AuthService } from '../../shared/auth/auth.service';
+import { ProfileService } from '../../shared/user/profile.service';
+import { MessageService } from '../../shared/message/message.service';
 
 @Component({
+  selector: 'send-message',
   templateUrl: './send.component.html',
   styleUrls: ['./send.component.css']
 })
@@ -15,7 +17,7 @@ export class MessageSendComponent {
   isLoggedIn = false;
   sender: any;
   user: any;
-  filter = this.route.snapshot.queryParamMap.get('user');
+  @Input() userID = this.route.snapshot.queryParamMap.get('user');
 
   ngOnInit() {
     this.authService.verify()
@@ -30,7 +32,7 @@ export class MessageSendComponent {
       }
     });
 
-    this.profileService.accessProfile(this.filter)
+    this.profileService.accessProfile(this.userID)
     .subscribe({
       next: (response) => {
         this.user = response.data;
@@ -49,10 +51,10 @@ export class MessageSendComponent {
     private route: ActivatedRoute,
     private router: Router,
     public fb: FormBuilder,
-    private http: HttpClient,
-    private _snackBar: MatSnackBar,
     private authService: AuthService,
-    private profileService: ProfileService)
+    private profileService: ProfileService,
+    private messageService: MessageService
+    )
   {
     this.form = this.fb.group({
       recipient: new FormControl('', [Validators.required]),
@@ -62,19 +64,13 @@ export class MessageSendComponent {
   }
 
   onSubmit() {
-    var formData: any = new FormData();
-    formData.append('subject', this.form.get('subject')?.value);
-    formData.append('message', this.form.get('message')?.value);
-    formData.append('parentID', this.sender)
-    formData.append('receiverID', this.filter);
+    const subject = this.form.controls['subject'].value;
+    const message = this.form.controls['message'].value;
+    const parentID = 1;
+    const receiverID = Number(this.userID);
 
-    for (var pair of formData.entries()) {
-      console.log(pair[0]+ ', ' + pair[1]); 
-    }
-
-    this.http.post(
-      'http://localhost:4300/api/sendmessage', JSON.stringify(formData)
-    ).subscribe({
+    this.messageService.sendMessage(subject, message, parentID, receiverID)
+    .subscribe({
         next: (response) => {
           console.log(response);
         },
