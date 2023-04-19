@@ -9,6 +9,7 @@ import { StorageService } from './shared/auth/storage.service';
 import data from 'src/app/searchdata.json';
 import {Product} from "./schema/product.schema";
 import {ProductService} from "./shared/product/product.service";
+import {SearchBoxComponent} from "./globals/search/search-box/search-box.component";
 
 interface Search {
   title: string;
@@ -28,9 +29,7 @@ export class AppComponent implements OnInit{
   myControl = new FormControl('');
   search: Search[] = data;
 
-  options: string[] = this.search.map(search => search.title);
-  category: string[] = this.search.map(search => search.cat);
-  filteredOptions!: Observable<string[]>;
+
   cartLength: number = 0;
   @ViewChild(MatMenuTrigger, { static: false })
   trigger!: MatMenuTrigger;
@@ -38,7 +37,7 @@ export class AppComponent implements OnInit{
   showCart: boolean = false;
   cartItems: Product[];
   productInfo: ProductService;
-  constructor(private router: Router, private authService: AuthService, private storageService: StorageService, public productService: ProductService) {
+  constructor(private router: Router, private authService: AuthService, private storageService: StorageService, public productService: ProductService, public searchBox: SearchBoxComponent) {
     this.productInfo = {} as ProductService;
   }
 
@@ -55,11 +54,6 @@ export class AppComponent implements OnInit{
         this.isLoggedIn = false;
       }
     });
-
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
-    );
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
     this.cartLength = cart.length;
     this.recheckIfInMenu = false;
@@ -80,10 +74,30 @@ export class AppComponent implements OnInit{
             let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, tag, imgURL, data.description,);
             product.id = data.ID;
             this.cartItems.push(product);
+            // Open search box dialog
+            this.searchBox.openDialog();
           }
         }
       });
     }
+  }
+
+  async GetProduct() {
+    //get myControl value
+    let keyword = this.myControl.value;
+    await (await this.productService.searchProduct(keyword)).subscribe({
+        next: (response) => {
+          if (response.status == 200) {
+            let data = response.body.data;
+            let imgURL = data.imageURL;
+            let tag = data.tags;
+            let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, tag, imgURL, data.description,);
+            product.id = data.ID;
+          }
+          //generate a dialog with the product info
+        }
+      }
+    );
   }
 
    async openCart(){
@@ -136,12 +150,5 @@ export class AppComponent implements OnInit{
     let cart = JSON.parse(localStorage.getItem('productIDList') || '[]');
     this.cartLength = cart.length;
     console.log("Cart Length Updated");
-  }
-
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
  }

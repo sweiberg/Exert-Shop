@@ -59,7 +59,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { ProfileComponent } from './profile';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { MessageSendComponent } from './message/send/send.component';
-import { MessageReadComponent } from './message/read/read.component'
+import { MessageReadComponent } from './message/read/read.component';
+import {DialogContentExampleDialog, SearchBoxComponent} from './globals/search/search-box/search-box.component'
 
 @NgModule({
   declarations: [
@@ -72,7 +73,9 @@ import { MessageReadComponent } from './message/read/read.component'
     AddProductComponent,
     ProfileComponent,
     MessageSendComponent,
-    MessageReadComponent
+    MessageReadComponent,
+    SearchBoxComponent,
+    DialogContentExampleDialog
   ],
   imports: [
     BrowserModule,
@@ -129,7 +132,7 @@ import { MessageReadComponent } from './message/read/read.component'
     FontAwesomeModule,
     HttpClientModule,
   ],
-  providers: [{    
+  providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true

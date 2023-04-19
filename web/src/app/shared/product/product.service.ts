@@ -12,4 +12,9 @@ export class ProductService {
     return this.http.get<any>(url,  {headers: { 'Content-Type': 'application/json'}, responseType: 'json', observe: 'response'
   });
   }
+  public async searchProduct(keyword:String|null): Promise<Observable<any>> {
+    const url = 'http://localhost:4300/api/product/search/'+keyword;
+    return this.http.get<any>(url,  {headers: { 'Content-Type': 'application/json'}, responseType: 'json', observe: 'response'
+  });
+  }
 }
