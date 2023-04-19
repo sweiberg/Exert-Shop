@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     private http: HttpClient,
     private _snackBar: MatSnackBar,
     private storageService: StorageService,
-    private authService: AuthService)
+    public authService: AuthService)
   {
     this.form = this.fb.group({
       username: new FormControl('', [Validators.required]),
@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
     this.authService.verify()
       .subscribe({
         next: (response) => {
-          console.log(JSON.stringify(response));
           this.isLoggedIn = true;
           this.router.navigate(['/profile'], {queryParams: {user: JSON.stringify(response.data)}});
         },
@@ -63,7 +62,6 @@ export class LoginComponent implements OnInit {
           this.storageService.set(response);
           this.isLoginFailed = false;
           this.isLoggedIn = true;
-          this.authService.isLoggedIn = true;
           this.router.navigate(['/profile'], {queryParams: {user: JSON.stringify(response.data)}});
           location.reload();
         },

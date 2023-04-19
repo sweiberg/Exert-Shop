@@ -123,4 +123,49 @@ code {
 
 .disabled {
     cursor: not-allowed;
-  }
+}
+
+.mat-content > mat-panel-description {
+  flex: 0 0 auto;
+  justify-content: space-between;
+}
+
+.mat-content > mat-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 0 50px;
+    flex: 1 1 0px;
+}
+
+#date .mat-icon {
+    font-size: 16px;
+}
+
+#author .mat-icon, #subject .mat-icon  {
+    font-size: 18px;
+}
+
+#subject {
+    display: inline-flex;
+    flex: 40;
+    align-items: top;
+}
+#date {
+    display: inline-flex;
+    min-width: 100px;
+    align-items: top;
+}
+#author {
+    display: inline-flex;
+    flex: 5;
+    min-width: 150px;
+    align-items: top;
+}
+#author a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+#author a:hover {
+    color: #fff;
+}
