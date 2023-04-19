@@ -60,7 +60,7 @@ import { ProfileComponent } from './profile';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { MessageSendComponent } from './message/send/send.component';
 import { MessageReadComponent } from './message/read/read.component';
-import {DialogContentExampleDialog, SearchBoxComponent} from './globals/search/search-box/search-box.component'
+import { SearchComponent } from './globals/search-box/search/search.component';
 
 @NgModule({
   declarations: [
@@ -74,8 +74,7 @@ import {DialogContentExampleDialog, SearchBoxComponent} from './globals/search/s
     ProfileComponent,
     MessageSendComponent,
     MessageReadComponent,
-    SearchBoxComponent,
-    DialogContentExampleDialog
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -126,6 +125,7 @@ import {DialogContentExampleDialog, SearchBoxComponent} from './globals/search/s
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    MatDialogModule,
     OverlayModule,
     PortalModule,
     ScrollingModule,

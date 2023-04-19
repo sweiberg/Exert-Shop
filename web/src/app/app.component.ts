@@ -9,7 +9,8 @@ import { StorageService } from './shared/auth/storage.service';
 import data from 'src/app/searchdata.json';
 import {Product} from "./schema/product.schema";
 import {ProductService} from "./shared/product/product.service";
-import {SearchBoxComponent} from "./globals/search/search-box/search-box.component";
+import {MatDialog} from "@angular/material/dialog";
+import {SearchComponent} from "./globals/search-box/search/search.component";
 
 interface Search {
   title: string;
@@ -37,7 +38,7 @@ export class AppComponent implements OnInit{
   showCart: boolean = false;
   cartItems: Product[];
   productInfo: ProductService;
-  constructor(private router: Router, private authService: AuthService, private storageService: StorageService, public productService: ProductService, public searchBox: SearchBoxComponent) {
+  constructor(public dialog: MatDialog, private router: Router, private authService: AuthService, private storageService: StorageService, public productService: ProductService) {
     this.productInfo = {} as ProductService;
   }
 
@@ -71,11 +72,9 @@ export class AppComponent implements OnInit{
           let imgURL = data.imageURL;
           let tag = data.tags;
           if (response.status == 200) {
-            let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, tag, imgURL, data.description,);
+            let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, tag, imgURL, data.description);
             product.id = data.ID;
             this.cartItems.push(product);
-            // Open search box dialog
-            this.searchBox.openDialog();
           }
         }
       });
@@ -87,15 +86,25 @@ export class AppComponent implements OnInit{
     let keyword = this.myControl.value;
     await (await this.productService.searchProduct(keyword)).subscribe({
         next: (response) => {
+          console.log(response.body.data)
+          let ProductList = [];
           if (response.status == 200) {
-            let data = response.body.data;
-            let imgURL = data.imageURL;
-            let tag = data.tags;
-            let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, tag, imgURL, data.description,);
-            product.id = data.ID;
+            for(let i = 0; i < response.body.data.length; i++){
+              let data = response.body.data[i];
+              let imgURL = data.imageURL;
+              let tag = data.tags;
+              let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, tag, imgURL, data.description,);
+              product.id = data.ID;
+              ProductList.push(product);
+            }
+            let dialogRef = this.dialog.open(SearchComponent, {
+              disableClose: false,
+              width:'80%',
+              height: '90%',
+            });
+            dialogRef.componentInstance.data = ProductList;
           }
-          //generate a dialog with the product info
-        }
+          }
       }
     );
   }
