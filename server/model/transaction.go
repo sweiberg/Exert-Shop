@@ -32,7 +32,7 @@ func (transaction *Transaction) Create() (*Transaction, error) {
 	return transaction, nil
 }
 
-func GetTransactionByID(id uint64) (Transaction, error) {
+func GetTransactionByID(id uint) (Transaction, error) {
 	var transaction Transaction
 
 	err := db.Database.Preload("Buyer").Preload("Seller").Where("id=?", id).Find(&transaction).Error

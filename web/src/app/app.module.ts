@@ -61,6 +61,7 @@ import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { MessageSendComponent } from './inbox/send/send.component';
 import { MessageReadComponent } from './inbox/read/read.component';
 import { MessageInboxComponent } from './inbox/inbox.component';
+import { SearchComponent } from './globals/search-box/search/search.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { MessageInboxComponent } from './inbox/inbox.component';
     ProfileComponent,
     MessageSendComponent,
     MessageReadComponent,
-    MessageInboxComponent
+    MessageInboxComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -125,13 +127,14 @@ import { MessageInboxComponent } from './inbox/inbox.component';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    MatDialogModule,
     OverlayModule,
     PortalModule,
     ScrollingModule,
     FontAwesomeModule,
     HttpClientModule,
   ],
-  providers: [{    
+  providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true

@@ -18,6 +18,8 @@ type User struct {
 
 	Purchases []*Transaction `gorm:"foreignKey:BuyerID" json:",omitempty"`
 	Sales     []*Transaction `gorm:"foreignKey:SellerID" json:",omitempty"`
+	Inbox     []*Message     `gorm:"foreignKey:ReceiverID" json:",omitempty"`
+	Sent      []*Message     `gorm:"foreignKey:SenderID" json:",omitempty"`
 }
 
 func (user *User) Create() (*User, error) {
@@ -59,7 +61,7 @@ func GetUserByName(username string) (User, error) {
 	return user, nil
 }
 
-func GetUserByID(id uint64) (User, error) {
+func GetUserByID(id uint) (User, error) {
 	var user User
 
 	err := db.Database.Where("id=?", id).Find(&user).Error
@@ -71,50 +73,72 @@ func GetUserByID(id uint64) (User, error) {
 	return user, nil
 }
 
-func GetUserPurchases(user *User) ([]Transaction, error) {
-	var transactions []Transaction
+func GetUserPurchases(id uint) (User, error) {
+	var purchases User
 
-	err := db.Database.Preload("Seller").Where("buyer_id=?", user.ID).Find(&transactions).Error
+	err := db.Database.Preload("Purchases.Seller").Where("id=?", id).Find(&purchases).Error
 
 	if err != nil {
-		return []Transaction{}, err
+		return User{}, err
 	}
 
-	return transactions, nil
+	return purchases, nil
 }
 
-func GetUserSales(user *User) ([]Transaction, error) {
-	var transactions []Transaction
+func GetUserSales(id uint) (User, error) {
+	var sales User
 
-	err := db.Database.Preload("Buyer").Where("seller_id=?", user.ID).Find(&transactions).Error
+	err := db.Database.Preload("Sales.Buyer").Where("id=?", id).Find(&sales).Error
 
 	if err != nil {
-		return []Transaction{}, err
+		return User{}, err
 	}
 
-	return transactions, nil
+	return sales, nil
 }
 
-func GetUserSentMessages(user *User) ([]Message, error) {
-	var messages []Message
+func GetUserSentMessages(id uint) (User, error) {
+	var sent User
 
-	err := db.Database.Preload("Receiver").Where("sender_id=?", user.ID).Order("created_at DESC").Find(&messages).Error
+	err := db.Database.Preload("Sent", func(db *gorm.DB) *gorm.DB {
+		return db.Order("created_at DESC")
+	}).Preload("Sent.Receiver").Where("id=?", id).Find(&sent).Error
 
 	if err != nil {
-		return []Message{}, err
+		return User{}, err
 	}
 
-	return messages, nil
+	return sent, nil
 }
 
-func GetUserInbox(user *User) ([]Message, error) {
-	var messages []Message
+func GetUserInbox(id uint) (User, error) {
+	var inbox User
 
-	err := db.Database.Preload("Sender").Where("receiver_id=?", user.ID).Order("created_at DESC").Find(&messages).Error
+	err := db.Database.Preload("Inbox", func(db *gorm.DB) *gorm.DB {
+		return db.Order("created_at DESC")
+	}).Preload("Inbox.Sender").Where("id=?", id).Find(&inbox).Error
 
 	if err != nil {
-		return []Message{}, err
+		return User{}, err
 	}
 
-	return messages, nil
+	return inbox, nil
+}
+
+func GetUserDashboard(id uint) (User, error) {
+	var dashboard User
+
+	err := db.Database.Preload("Purchases", func(db *gorm.DB) *gorm.DB {
+		return db.Limit(10)
+	}).Preload("Sales", func(db *gorm.DB) *gorm.DB {
+		return db.Limit(10)
+	}).Preload("Inbox", func(db *gorm.DB) *gorm.DB {
+		return db.Limit(10)
+	}).Where("id=?", id).Find(&dashboard).Error
+
+	if err != nil {
+		return User{}, err
+	}
+
+	return dashboard, nil
 }

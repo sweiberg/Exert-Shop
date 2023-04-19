@@ -31,7 +31,7 @@ func (message *Message) Create() (*Message, error) {
 	return message, nil
 }
 
-func GetMessageByID(id uint64) (Message, error) {
+func GetMessageByID(id uint) (Message, error) {
 	var message Message
 
 	err := db.Database.Preload("Sender").Preload("Receiver").Preload("Replies").Where("id=?", id).Find(&message).Error
