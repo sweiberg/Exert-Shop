@@ -57,6 +57,7 @@ func loadRoutes() {
 	protectedAPI.POST("/addcategory", controller.AddCategory)
 	protectedAPI.POST("/sendmessage", controller.SendMessage)
 	protectedAPI.POST("/checkout", controller.Checkout)
+	protectedAPI.POST("/transaction/add", controller.AddTransaction)
 	protectedAPI.GET("/message/:id", controller.ViewMessage)
 	protectedAPI.GET("/transaction/:id", controller.ViewTransaction)
 	protectedAPI.GET("/sales", controller.ViewSales)
