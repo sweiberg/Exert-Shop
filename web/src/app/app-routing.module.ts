@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home';
+import { CategoryComponent } from './category';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import {ProductHomeComponent} from './product_home';
@@ -10,10 +11,10 @@ import { ProfileComponent } from './profile';
 import { MessageSendComponent } from './inbox/send';
 import { MessageReadComponent } from './inbox/read';
 import { MessageInboxComponent } from './inbox';
-import { TestComponent } from './admin/test';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'category', component: CategoryComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path : 'sample_product', component: ProductHomeComponent},
@@ -23,7 +24,6 @@ const routes: Routes = [
   { path : 'inbox/send', component: MessageSendComponent},
   { path : 'inbox/read', component: MessageReadComponent},
   { path : 'inbox', component: MessageInboxComponent},
-  { path : 'admin/test', component: TestComponent},
   { path: '**', redirectTo: '' }
 ];
 

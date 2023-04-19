@@ -9,6 +9,7 @@ import { StorageService } from './shared/auth/storage.service';
 import data from './searchdata.json';
 import {Product} from "./schema/product.schema";
 import {ProductService} from "./shared/product/product.service";
+import { Category } from './schema/category.schema';
 
 interface Search {
   title: string;
@@ -27,7 +28,6 @@ export class AppComponent implements OnInit{
   //isLoggedIn = false;
   myControl = new FormControl('');
   search: Search[] = data;
-
   options: string[] = this.search.map(search => search.title);
   category: string[] = this.search.map(search => search.cat);
   filteredOptions!: Observable<string[]>;
@@ -112,6 +112,10 @@ export class AppComponent implements OnInit{
         this.trigger.closeMenu();
       }
     }, 175);
+  }
+
+  openVG() {
+    this.router.navigate(['/category'], {queryParams: {id: 11}});
   }
 
   openInbox() {

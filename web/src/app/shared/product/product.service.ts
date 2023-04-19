@@ -32,6 +32,14 @@ export class ProductService {
     );
   }
 
+  getCategoryByID(id: number) :Observable<any> {
+    return this.http.get(
+      'http://localhost:4300/api/category/' + id,
+      {
+      }
+    );
+  }
+
   getSample(): Observable<any> {
     return this.http.get(
       'http://localhost:4300/api/category/all/5',

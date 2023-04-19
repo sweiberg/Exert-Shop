@@ -151,15 +151,6 @@ h1#category-name {
   margin-bottom: 5px;
 }
 
-h1#category-name > a {
-  color: #fff;
-  transition: 0.3s;
-}
-
-h1#category-name > a:hover {
-  color: #fbb72c;
-}
-
 mat-divider {
   border-top-width: 4px;
 }

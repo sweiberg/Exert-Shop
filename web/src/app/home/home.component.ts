@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit {
 
         this.productService.getSample().subscribe({
             next: (response) => {
-                console.log(response.data);
                 for (let categories of response.data) {
                     this.prodList = new Array();
                     if (categories.Products) {
@@ -37,7 +36,6 @@ export class HomeComponent implements OnInit {
                     const catDesc = categories.description;
                     const catItem = new Category(catID, catName, catDesc, this.prodList);
                     this.catList.push(catItem);
-                    console.log(this.catList);
                     }
                 }
             },

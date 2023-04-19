@@ -1,8 +1,8 @@
-<div *ngFor="let category of catList">
-    <h1 id="category-name"><a href="/category?id={{category.id}}">{{ category.name }}</a></h1>
+<div>
+    <h1 id="category-name">{{ category.name }}</h1>
     <mat-divider></mat-divider>
     <div id="category-list" >
-        <div id="product-list" class="product-card" *ngFor="let product of category.products">
+        <div id="product-list" class="product-card" *ngFor="let product of prodList">
             <div *ngIf="product.tag!=''" class="badge" >{{product.tag}}</div>
             <div class="product-holder">
               <img src="{{product.imgURL}}" alt="">
