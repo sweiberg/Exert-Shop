@@ -1,5 +1,6 @@
 describe('template spec', () => {
     it('passes', () => {
+        cy.viewport(1920, 1080)
         cy.wait(500)
         cy.visit('http://localhost:4200/login')
         cy.wait(500)
@@ -15,5 +16,15 @@ describe('template spec', () => {
         cy.wait(500)
         cy.visit('http://localhost:4200/profile?user=3', {timeout: 60000})
         cy.contains('#profile-header', 'Charades')
+        cy.get('#send-message')
+        .click()
+        cy.wait(500)
+        cy.get('input[formControlName="subject"]')
+        .type('Hello')
+        cy.get('#message')
+        .type('This is a test')
+        cy.get('button[type=submit]')
+        .click()
+        cy.wait(500)
     })
   })

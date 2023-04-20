@@ -61,6 +61,8 @@ import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { MessageSendComponent } from './inbox/send/send.component';
 import { MessageReadComponent } from './inbox/read/read.component';
 import { MessageInboxComponent } from './inbox/inbox.component';
+import { AddCategoryComponent } from './admin/add_category/add.category.component';
+import { CategoryComponent } from './category/category.component';
 import { SearchComponent } from './globals/search-box/search/search.component';
 import { CheckoutFormComponent } from './globals/checkout-form/checkout-form.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -78,6 +80,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     MessageSendComponent,
     MessageReadComponent,
     MessageInboxComponent,
+    AddCategoryComponent,
+    CategoryComponent,
     SearchComponent,
     CheckoutFormComponent,
     SidebarComponent,

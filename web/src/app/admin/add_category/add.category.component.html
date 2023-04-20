@@ -1,0 +1,22 @@
+<mat-card class="user-form-card">
+    <mat-card-header>
+        <mat-card-title id="form-title">Add Category</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+      <form class="user-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label for="name">Category Name</mat-label>
+        <input matInput id="name" type="text" formControlName="name">
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label for="description">Category Description</mat-label>
+        <textarea  matInput id="description" #message type="text" formControlName="description" style="height:200px"></textarea>
+        <mat-error>Required</mat-error>
+      </mat-form-field>
+    <mat-card-actions>
+        <button mat-raised-button type="submit" color="primary">Send</button>
+    </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>

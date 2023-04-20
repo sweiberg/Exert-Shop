@@ -1,0 +1,9 @@
+#add-cat {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+#add-cat button {
+    margin-top: 10px;
+}

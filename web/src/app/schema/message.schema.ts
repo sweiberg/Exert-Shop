@@ -1,4 +1,4 @@
-export class Message{
+export class Message {
     parentID: number;
     messageID: number;
     senderID: number;

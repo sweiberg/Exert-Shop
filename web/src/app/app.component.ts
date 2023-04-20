@@ -9,6 +9,7 @@ import { StorageService } from './shared/auth/storage.service';
 import data from './searchdata.json';
 import {Product} from "./schema/product.schema";
 import {ProductService} from "./shared/product/product.service";
+import { Category } from './schema/category.schema';
 import {MatDialog} from "@angular/material/dialog";
 import {SearchComponent} from "./globals/search-box/search/search.component";
 import {CheckoutFormComponent} from "./globals/checkout-form/checkout-form.component";
@@ -30,8 +31,9 @@ export class AppComponent implements OnInit{
   //isLoggedIn = false;
   myControl = new FormControl('');
   search: Search[] = data;
-
-
+  options: string[] = this.search.map(search => search.title);
+  category: string[] = this.search.map(search => search.cat);
+  filteredOptions!: Observable<string[]>;
   cartLength: number = 0;
   @ViewChild(MatMenuTrigger, { static: false })
   trigger!: MatMenuTrigger;
@@ -72,7 +74,7 @@ export class AppComponent implements OnInit{
           let imgURL = data.imageURL;
           let tag = data.tags;
           if (response.status == 200) {
-            let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, tag, imgURL, data.description);
+            let product = new Product(data.name, data.finalPrice, data.originalPrice, data.category, data.categoryID, tag, imgURL, data.description, data.categoryID);
             product.id = data.ID;
             this.cartItems.push(product);
           }
@@ -154,6 +156,10 @@ export class AppComponent implements OnInit{
     }, 175);
   }
 
+  openVG() {
+    this.router.navigate(['/category'], {queryParams: {id: 11}});
+  }
+
   openInbox() {
     this.router.navigate(['/inbox'], {queryParams: {user: this.user.data}});
   }
@@ -180,4 +186,11 @@ export class AppComponent implements OnInit{
     this.cartLength = cart.length;
     console.log("Cart Length Updated");
   }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
  }

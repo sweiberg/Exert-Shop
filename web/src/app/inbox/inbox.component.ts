@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../shared/message/message.service';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import { Message } from '../schema/message.schema'
 import { MessageSendComponent } from './send/send.component';
 
@@ -9,7 +9,8 @@ import { MessageSendComponent } from './send/send.component';
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css']
 })
-export class MessageInboxComponent {
+
+export class MessageInboxComponent implements OnInit {
   sentList: Array<Message>;
   inboxList: Array<Message>;
   isInbox: boolean = true;
@@ -24,17 +25,16 @@ export class MessageInboxComponent {
     this.messageService.accessInbox()
     .subscribe({
       next: (response) => {
-        for (let i = 0; i < response.data.length; i++) {
-          console.log(response.data[i].CreatedAt)
-          const parentID = response.data[i].ParentID;
-          const messageID = response.data[i].ID;
-          const senderID = response.data[i].senderID;
-          const recipientID = response.data[i].receiverID;
-          const date = response.data[i].CreatedAt;
-          const userName = response.data[i].Sender.username;
-          const subject = response.data[i].subject;
-          const body = response.data[i].message;
-          const inboxItem = new Message(parentID, messageID, senderID, recipientID, date, userName, subject, body)
+        for (let i = 0; i < response.data.Inbox.length; i++) {
+          const parentID = response.data.Inbox[i].ParentID;
+          const messageID = response.data.Inbox[i].ID;
+          const senderID = response.data.Inbox[i].senderID;
+          const recipientID = response.data.Inbox[i].receiverID;
+          const date = response.data.Inbox[i].CreatedAt;
+          const userName = response.data.Inbox[i].Sender.username;
+          const subject = response.data.Inbox[i].subject;
+          const body = response.data.Inbox[i].message;
+          const inboxItem = new Message(parentID, messageID, senderID, recipientID, date, userName, subject, body);
           this.inboxList.push(inboxItem);
         }
       }, 
@@ -46,17 +46,16 @@ export class MessageInboxComponent {
     this.messageService.accessSent()
     .subscribe({
       next: (response) => {
-        console.log(response.data);
-        for (let i = 0; i < response.data.length; i++) {
-          const parentID = response.data[i].ParentID;
-          const messageID = response.data[i].ID;
-          const senderID = response.data[i].senderID;
-          const recipientID = response.data[i].receiverID;
-          const date = response.data[i].CreatedAt;
-          const userName = response.data[i].Receiver.username;
-          const subject = response.data[i].subject;
-          const body = response.data[i].message;
-          const sentItem = new Message(parentID, messageID, senderID, recipientID, date, userName, subject, body)
+        for (let i = 0; i < response.data.Sent.length; i++) {
+          const parentID = response.data.Sent[i].ParentID;
+          const messageID = response.data.Sent[i].ID;
+          const senderID = response.data.Sent[i].senderID;
+          const recipientID = response.data.Sent[i].receiverID;
+          const date = response.data.Sent[i].CreatedAt;
+          const userName = response.data.Sent[i].Receiver.username;
+          const subject = response.data.Sent[i].subject;
+          const body = response.data.Sent[i].message;
+          const sentItem = new Message(parentID, messageID, senderID, recipientID, date, userName, subject, body);
           this.sentList.push(sentItem);
         }
       }, 
