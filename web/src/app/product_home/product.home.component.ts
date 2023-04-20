@@ -4,12 +4,13 @@ import {HttpClient} from "@angular/common/http";
 
 @Component({
   templateUrl: 'product.home.component.html',
+  selector: 'product-home'
 })
 export class ProductHomeComponent{
   productList:Product[] = [];
   constructor(private http: HttpClient){
     // How many products do you want to show?
-    let productAmount = 8;
+    let productAmount = 10;
     for(let i = 1; i < productAmount+1; i++){
       this.http.get('http://localhost:4300/api/product/'+i,{
         headers: { 'Content-Type': 'application/json'}, responseType: 'json', observe: 'response'
