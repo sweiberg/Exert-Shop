@@ -67,17 +67,23 @@ func Checkout(context *gin.Context) {
 
 	charge, err := external.StripeProcessCharge(price, user.Email)
 
-	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        if err != nil {
+            context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 
-		return
-	}
+            return
+        }
 
-	for i := 0; i < len(transactions); i++ {
-		transactions[i].Create()
-	}
+        for i := 0; i < len(transactions); i++ {
+            transactions[i].Create()
+        }
 
-	context.JSON(http.StatusCreated, gin.H{"data": charge})
+        if charge.Amount == 0 {
+            context.JSON(http.StatusBadRequest, gin.H{"error": "The charge amount cannot be 0."})
+
+            return
+        }
+
+        context.JSON(http.StatusCreated, gin.H{"data": "success"})
 }
 
 func AddTransaction(context *gin.Context) {
