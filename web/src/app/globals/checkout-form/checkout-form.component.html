@@ -63,7 +63,7 @@
       <input matInput formControlName="cvv" />
     </mat-form-field>
   </div>
-  <button mat-raised-button color="primary">Submit</button>
+  <button (click)="InitiateCheckout()" mat-raised-button color="primary">Submit</button>
 </form>
   <app-sidebar [productData]="data">
     HELLO

@@ -26,5 +26,7 @@ export class ProductComponent {
     }
     cart.push(product.id);
     localStorage.setItem('cart', JSON.stringify(cart));
+    //Update cart length
+    // this.appComponent.cartLength = cart.length;
   }
 }

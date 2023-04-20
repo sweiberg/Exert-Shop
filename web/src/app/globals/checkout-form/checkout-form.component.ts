@@ -24,4 +24,7 @@ export class CheckoutFormComponent {
       cvv: ['']
     });
   }
+  InitiateCheckout(){
+    console.log("Call the checkout API here");
+  }
 }
