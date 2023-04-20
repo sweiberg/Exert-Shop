@@ -11,14 +11,8 @@
                      placeholder="Pick one"
                      aria-label="Search"
                      matInput
-                     [formControl]="myControl"
-                     [matAutocomplete]="auto">
-              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async | slice : 0 : 10" [value]="option">
-                  {{option}}
-                </mat-option>
-              </mat-autocomplete>
-              <button type="button" mat-icon-button matSuffix>
+                     [formControl]="myControl">
+              <button (click)="GetProduct()" type="button" mat-icon-button matSuffix>
                 <mat-icon>search</mat-icon>
             </button>
             </mat-form-field>
@@ -57,6 +51,7 @@
         <button (click)=removeItem(item.id) mat-icon-button><mat-icon>delete</mat-icon></button>
       </mat-list-item>
     </mat-list>
+    <button (click)=Checkout() mat-raised-button color="primary">CHECKOUT</button>
   </mat-card-content>
 </mat-card>
 

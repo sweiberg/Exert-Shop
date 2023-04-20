@@ -1,0 +1,14 @@
+<div class="resize">
+Cart:
+
+<a *ngFor="let item of productData">
+  <br>
+  {{item.name}}
+  <div *ngIf="item.finalPrice!=0 && item.finalPrice<item.originalPrice " class="product-price"><small><s>${{item.originalPrice}}.00</s></small>${{item.finalPrice}}.00</div>
+  <div *ngIf="item.finalPrice==0 || item.finalPrice>=item.originalPrice" class="product-price">${{item.originalPrice}}.00</div>
+  <br>
+</a>
+----------------------------------------------
+<br>
+<a>TOTAL : ${{sum}}</a>
+</div>

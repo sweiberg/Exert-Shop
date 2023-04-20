@@ -12,8 +12,9 @@ export class ProductComponent {
   faShoppingCart = faShoppingCart;
   @Input() product: Product;
 
-  constructor(private appComponent: AppComponent) {
-  }
+  constructor() {
+    // constructor() {
+    }
 
   addToCart(product: Product) {
     //Add product ID to local storage as array
@@ -25,6 +26,7 @@ export class ProductComponent {
     }
     cart.push(product.id);
     localStorage.setItem('cart', JSON.stringify(cart));
-    this.appComponent.cartLength = cart.length;
+    //Update cart length
+    // this.appComponent.cartLength = cart.length;
   }
 }

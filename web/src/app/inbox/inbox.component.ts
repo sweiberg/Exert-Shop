@@ -9,6 +9,7 @@ import { MessageSendComponent } from './send/send.component';
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css']
 })
+
 export class MessageInboxComponent implements OnInit {
   sentList: Array<Message>;
   inboxList: Array<Message>;

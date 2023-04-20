@@ -128,12 +128,12 @@ func GetUserInbox(id uint) (User, error) {
 func GetUserDashboard(id uint) (User, error) {
 	var dashboard User
 
-	err := db.Database.Preload("Purchases", func(tx *gorm.DB) *gorm.DB {
-		return tx.Limit(10)
-	}).Preload("Sales", func(tx *gorm.DB) *gorm.DB {
-		return tx.Limit(10)
-	}).Preload("Inbox", func(tx *gorm.DB) *gorm.DB {
-		return tx.Limit(10)
+	err := db.Database.Preload("Purchases", func(db *gorm.DB) *gorm.DB {
+		return db.Limit(10)
+	}).Preload("Sales", func(db *gorm.DB) *gorm.DB {
+		return db.Limit(10)
+	}).Preload("Inbox", func(db *gorm.DB) *gorm.DB {
+		return db.Limit(10)
 	}).Where("id=?", id).Find(&dashboard).Error
 
 	if err != nil {

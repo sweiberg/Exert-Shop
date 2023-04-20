@@ -63,6 +63,9 @@ import { MessageReadComponent } from './inbox/read/read.component';
 import { MessageInboxComponent } from './inbox/inbox.component';
 import { AddCategoryComponent } from './admin/add_category/add.category.component';
 import { CategoryComponent } from './category/category.component';
+import { SearchComponent } from './globals/search-box/search/search.component';
+import { CheckoutFormComponent } from './globals/checkout-form/checkout-form.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +82,9 @@ import { CategoryComponent } from './category/category.component';
     MessageInboxComponent,
     AddCategoryComponent,
     CategoryComponent,
+    SearchComponent,
+    CheckoutFormComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
@@ -129,13 +135,14 @@ import { CategoryComponent } from './category/category.component';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    MatDialogModule,
     OverlayModule,
     PortalModule,
     ScrollingModule,
     FontAwesomeModule,
     HttpClientModule,
   ],
-  providers: [{    
+  providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
