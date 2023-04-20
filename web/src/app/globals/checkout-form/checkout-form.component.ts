@@ -43,6 +43,11 @@ export class CheckoutFormComponent {
       }
       checkoutItems.push(productObject);
     }
+    if(true){
+      alert("Checkout successful");
+      localStorage.removeItem('cart');
+      window.location.reload();
+    }
     //call the checkout API and pass the json array
     (await this.productService.checkoutProducts(checkoutItems)).subscribe({
       next: (response) => {
