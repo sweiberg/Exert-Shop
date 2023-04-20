@@ -1,5 +1,5 @@
-<button mat-button (click)="openInbox()" [disabled]="isInbox">Inbox</button>
-<button mat-button (click)="openSent()" [disabled]="!isInbox">Sent Messages</button>
+<button mat-button (click)="openInbox()" [disabled]="isInbox" id="view-inbox">Inbox</button>
+<button mat-button (click)="openSent()" [disabled]="!isInbox" id="view-sent">Sent Messages</button>
 <br /><mat-divider></mat-divider><br />
 <mat-accordion *ngIf="isInbox">
   <mat-expansion-panel *ngFor="let message of inboxList">

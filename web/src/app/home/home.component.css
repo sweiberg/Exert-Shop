@@ -134,15 +134,13 @@ a
 }
 
 #category-list {
-  display: flex;
-  flex: 1 1 0px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 30px;
 }
 
 #product-list {
-  display: inline-flex;
   margin-top: 15px;
-  flex: 0 1 15%;
 }
 
 h1#category-name {

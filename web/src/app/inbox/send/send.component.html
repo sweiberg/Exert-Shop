@@ -16,7 +16,7 @@
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label for="message">Enter your message</mat-label>
-        <textarea  matInput id="message" #message type="text" formControlName="message" style="height:200px"></textarea>
+        <textarea  matInput formControlName="message" id="message" #message type="text" formControlName="message" style="height:200px"></textarea>
         <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
         <mat-error>Required</mat-error>
       </mat-form-field>
